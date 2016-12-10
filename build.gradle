@@ -1,0 +1,57 @@
+buildscript {
+    repositories {
+        jcenter()
+        //maven { url "http://repo.spring.io/snapshot" }
+        //maven { url "http://repo.spring.io/milestone" }
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.4.2.RELEASE")
+    }
+}
+
+
+group 'agrechnev'
+
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'org.springframework.boot'
+
+jar {
+    version = '0.0.1-SNAPSHOT'
+    baseName = 'npe'
+}
+
+repositories {
+    jcenter()
+    // maven { url "http://repo.spring.io/snapshot" }
+    // maven { url "http://repo.spring.io/milestone" }
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+dependencies {
+
+    // If you want Hibernate 5.2.x instead of the default 5.0.x
+    compile group: 'org.hibernate', name: 'hibernate-core', version: '5.2.4.Final'
+
+// SPRING BOOT
+
+//    compile("org.springframework.boot:spring-boot-starter-web")
+
+    compile("org.springframework.boot:spring-boot-starter-data-jpa") {
+        // Exclude Hibernate 5.0 from spring boot if using Hibernate 5.2
+        exclude module: 'hibernate-entitymanager'
+    }
+
+    testCompile("org.springframework.boot:spring-boot-starter-test")
+
+// MySQL
+
+    // https://mvnrepository.com/artifact/mysql/mysql-connector-java
+    compile group: 'mysql', name: 'mysql-connector-java', version: '6.0.5'
+//    compile group: 'mysql', name: 'mysql-connector-java', version: '5.1.40'
+
+}
