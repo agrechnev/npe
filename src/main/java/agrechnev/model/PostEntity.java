@@ -2,10 +2,7 @@ package agrechnev.model;
 
 import org.hibernate.annotations.Type;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 /**
@@ -14,7 +11,6 @@ import java.time.LocalDateTime;
  */
 @Entity
 public class PostEntity {
-
 
     @Id
     @GeneratedValue
@@ -33,5 +29,41 @@ public class PostEntity {
 
     int rating; // Post rating, normally starts from 0
 
+    //-------------- Links -----------------
+    @ManyToOne
+    UserEntity user;
 
+    // TODO: add comments here
+
+    //-------------- Constructors -----------
+
+    public PostEntity() {
+    }
+
+    public PostEntity(String title, String text, LocalDateTime timeStamp, int rating) {
+        this.title = title;
+        this.text = text;
+        this.timeStamp = timeStamp;
+        this.rating = rating;
+    }
+
+    //--------------- toString-----------------------
+
+    //--------------- equals + hashCode -------------
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof PostEntity)) return false;
+
+        PostEntity that = (PostEntity) o;
+
+        return id != null ? id.equals(that.id) : that.id == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
+    }
 }

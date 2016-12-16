@@ -31,10 +31,11 @@ public class UserEntity {
     @Column(nullable = false)
     private String fullName;
 
+    @Column(nullable = false)
     private String email;
 
     /**
-     * The point system, any new user has few (say 0 or 10) points form the start
+     * The point system, any new user has few (say 0) points form the start
      * And you need to reach, say, 1000 to become an EXPERT
      */
     private int points;
@@ -45,6 +46,9 @@ public class UserEntity {
     //-------------- Links -----------------------
     @ManyToMany
     private Set<CategoryEntity> myCategories = new HashSet<>();
+
+    @OneToMany
+    private Set<PostEntity> myPosts = new HashSet<>();
 
     //--------------------------------------------
     //---------------------------------------------------------
@@ -151,5 +155,23 @@ public class UserEntity {
                 .collect(Collectors.toList()), ", "));
         sb.append("]}");
         return sb.toString();
+    }
+
+    //--------------- equals + hashCode -------------
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof UserEntity)) return false;
+
+        UserEntity that = (UserEntity) o;
+
+        return getId() != null ? getId().equals(that.getId()) : that.getId() == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        return getId() != null ? getId().hashCode() : 0;
     }
 }

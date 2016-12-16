@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManagerFactory;
 import java.util.List;
 
 /**
@@ -16,8 +15,8 @@ import java.util.List;
  */
 @Repository
 public class DemoRun {
-    @Autowired
-    EntityManagerFactory entityManagerFactory;
+//    @Autowired
+//    EntityManagerFactory entityManagerFactory;
 
     @Autowired
     BookRepository bookRepository;

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<!--By Oleksiy Grechnyev-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>NullPointerException: a programming forum</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.0/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.0/angular-route.min.js"></script>
+    <!--<script src="ajs/angular.min.js"></script>-->
+    <!--<script src="ajs/angular-route.min.js"></script>-->
+</head>
+<body ng-app="npeApp">
+
+<div class="container">
+    <ul class="nav nav-pills" role="tablist">
+        <li class="active"><a href="#!/">home</a></li>
+        <li><a href="#!/red">red</a></li>
+        <li><a href="#!/green">green</a></li>
+        <li><a href="#!/blue">blue</a></li>
+    </ul>
+</div>
+
+<!--<p><a href="#!/">Main</a></p>-->
+
+<!--<a href="#!/red">Red</a>-->
+<!--<a href="#!/green">Green</a>-->
+<!--<a href="#!/blue">Blue</a>-->
+
+<div ng-view></div>
+
+<!--Main AngularJS script-->
+<script src="js/npe-main.js"></script>
+
+</body>
+</html>
