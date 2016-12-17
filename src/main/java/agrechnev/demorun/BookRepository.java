@@ -1,6 +1,5 @@
-package agrechnev.repo;
+package agrechnev.demorun;
 
-import agrechnev.demorun.Book;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**

@@ -3,34 +3,36 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>NullPointerException: a programming forum</title>
+    <title>NullPointerException (NPE)</title>
     <link href="css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.0/angular.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.0/angular-route.min.js"></script>
-    <!--<script src="ajs/angular.min.js"></script>-->
-    <!--<script src="ajs/angular-route.min.js"></script>-->
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.0/angular.min.js"></script>-->
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.0/angular-route.min.js"></script>-->
+    <script src="ajs/angular.min.js"></script>
+    <script src="ajs/angular-route.min.js"></script>
 </head>
 <body ng-app="npeApp">
 
-<div class="container">
+<!-- Main menu -->
+<div class="container" ng-controller="navigation as navy">
     <ul class="nav nav-pills" role="tablist">
-        <li class="active"><a href="#!/">home</a></li>
-        <li><a href="#!/red">red</a></li>
-        <li><a href="#!/green">green</a></li>
-        <li><a href="#!/blue">blue</a></li>
+        <li ng-class="{active : navy.isActive('/')}"><a href="#!/">Home</a></li>
+        <li ng-class="{active : navy.isActive('/red')}"><a href="#!/red">Red</a></li>
+        <li ng-class="{active : navy.isActive('/green')}"><a href="#!/green">Green</a></li>
+        <li ng-class="{active : navy.isActive('/blue')}"><a href="#!/blue">Blue</a></li>
+
+        <li ng-show="!isAuthenticated" ng-class="{active : navy.isActive('/login')}"><a href="#!/login">Log In</a></li>
+        <li ng-show="isAuthenticated"><a href="" ng-click="navy.logout()">Log Out</a></li>
     </ul>
 </div>
 
-<!--<p><a href="#!/">Main</a></p>-->
-
-<!--<a href="#!/red">Red</a>-->
-<!--<a href="#!/green">Green</a>-->
-<!--<a href="#!/blue">Blue</a>-->
-
+<!-- Viewer -->
 <div ng-view></div>
 
 <!--Main AngularJS script-->
 <script src="js/npe-main.js"></script>
+<!--Controllers-->
+<script src="js/home.js"></script>
+<script src="js/login.js"></script>
 
 </body>
 </html>

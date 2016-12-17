@@ -1,6 +1,7 @@
 package agrechnev;
 
 import agrechnev.demorun.DemoRun2;
+import agrechnev.sampledb.SampleDB;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -24,13 +25,14 @@ public class Application {
 
 
     @Bean
-    public CommandLineRunner demo(DemoRun2 demoRun2) {
+    public CommandLineRunner demo(DemoRun2 demoRun2, SampleDB sampleDB) {
         return args -> {
             logger.info("I am Brianna and I am a jedi !!!");
 
             // Fun with the DB
 
-//            demoRun2.create();
+            // Create sampleDB if needed
+//            sampleDB.createSampleDB();
             demoRun2.print();
         };
     }
