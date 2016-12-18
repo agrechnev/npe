@@ -7,7 +7,7 @@ import agrechnev.model.UserRole;
  * User DTO for the NPE project
  * Note: password is NOT set when reading user data from the repo
  */
-public class UserDto {
+public class UserDto implements Dto {
 
     private Long id;  // Unique user id
 

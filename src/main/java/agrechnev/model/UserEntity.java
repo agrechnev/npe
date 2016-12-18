@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
  * User entity for the NPE project
  */
 @Entity
-public class UserEntity {
+public class UserEntity implements EntityWithId {
 
 
     @Id

@@ -12,8 +12,10 @@ app.config(function ($routeProvider, $httpProvider) {
             controller: 'home',
             controllerAs: 'controller'
         })
-        .when("/red", {
-            templateUrl: "red.html"
+        .when("/users", {
+            templateUrl: "users.html",
+            controller: 'users',
+            controllerAs: 'controller'
         })
         .when("/green", {
             templateUrl: "green.html"

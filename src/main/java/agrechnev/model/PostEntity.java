@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
  * Post entity for the NPE project
  */
 @Entity
-public class PostEntity {
+public class PostEntity implements EntityWithId {
 
     @Id
     @GeneratedValue
@@ -46,6 +46,58 @@ public class PostEntity {
         this.timeStamp = timeStamp;
         this.rating = rating;
     }
+    //--------------- getters + setters-----------------------
+
+    @Override
+    public Long getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public LocalDateTime getTimeStamp() {
+        return timeStamp;
+    }
+
+    public void setTimeStamp(LocalDateTime timeStamp) {
+        this.timeStamp = timeStamp;
+    }
+
+    public int getRating() {
+        return rating;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
+    }
+
+    public UserEntity getUser() {
+        return user;
+    }
+
+    public void setUser(UserEntity user) {
+        this.user = user;
+    }
+
 
     //--------------- toString-----------------------
 

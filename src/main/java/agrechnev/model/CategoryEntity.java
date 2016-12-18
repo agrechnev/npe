@@ -11,7 +11,7 @@ import javax.persistence.Id;
  * E.g. "java", "c#" or "python"
  */
 @Entity
-public class CategoryEntity {
+public class CategoryEntity implements EntityWithId {
     @Id
     @GeneratedValue
     private Long id;  // Unique category id

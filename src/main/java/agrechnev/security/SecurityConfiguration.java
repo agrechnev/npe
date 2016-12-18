@@ -24,7 +24,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 // Unlock static pages
 //                .antMatchers("/index.html", "/home.html", "/login.html",
 //                        "/", "/red.html", "/green.html").permitAll()
-                .antMatchers("/*.html", "/", "/ajs/*.js").permitAll()
+                .antMatchers("/*.html", "/", "/ajs/*.js", "/user", "/user/").permitAll()
                 .anyRequest().authenticated()
 
                 .and()
