@@ -64,6 +64,7 @@ public class UserService extends AbstractService<UserDto, UserEntity> {
 
     /**
      * Check if the Dto is new (e.g. user name is not repeated)
+     *
      * @param dto
      * @return
      */
@@ -76,6 +77,7 @@ public class UserService extends AbstractService<UserDto, UserEntity> {
 
     /**
      * Convert Entity to Dto
+     *
      * @param entity
      * @return
      */
@@ -93,6 +95,7 @@ public class UserService extends AbstractService<UserDto, UserEntity> {
 
     /**
      * Update entity with a Dto leaving all other fields (id, links) untouched
+     *
      * @param entity
      * @param dto
      */

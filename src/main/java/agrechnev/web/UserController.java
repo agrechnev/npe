@@ -17,7 +17,7 @@ import java.util.Collection;
  * User account controller
  * Created by Oleksiy Grechnyev on 12/11/2016.
  */
-@RequestMapping("/user")
+@RequestMapping("/rest/user")
 @RestController
 public class UserController {
     UserService userService;
@@ -45,6 +45,8 @@ public class UserController {
      */
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<?> create(@RequestBody UserDto userDto) {
+        System.out.println("Creating new user :" + userDto);
+
         Long id = userService.create(userDto);
 
         // Create new user's URI

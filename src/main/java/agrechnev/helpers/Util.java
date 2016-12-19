@@ -17,14 +17,15 @@ public class Util {
     /**
      * Check if a String is null or empty
      * Whitespace-only strings, e.g. "    " are considered empty
+     *
      * @param s
      * @return
      */
     public static boolean isEmptyString(String s) {
         if (s == null || s.trim().equals("")) {
-            return false;
-        } else {
             return true;
+        } else {
+            return false;
         }
     }
 

@@ -59,7 +59,7 @@ public class SampleDB {
         userBrianna.getMyCategories().add(catCPP);
         userBrianna.getMyCategories().add(catCSharp);
 
-        UserEntity userAdmin = new UserEntity("admin", "amdin", "Site administrator",
+        UserEntity userAdmin = new UserEntity("admin", "admin", "Site administrator",
                 "webmaster@npe.com", 10, UserRole.ADMIN);
         userEntityRepository.save(userAdmin);
     }

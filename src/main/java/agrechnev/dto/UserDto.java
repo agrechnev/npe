@@ -110,7 +110,7 @@ public class UserDto implements Dto {
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("UserEntity{");
+        final StringBuilder sb = new StringBuilder("UserDto{");
         sb.append("id=").append(id);
         sb.append(", login='").append(login).append('\'');
         sb.append(", passw='").append(passw).append('\'');

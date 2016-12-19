@@ -12,6 +12,10 @@
 </head>
 <body ng-app="npeApp">
 
+<h3 ng-show="isAuthenticated">
+    Logged in as {{authUserName}}
+    <span ng-show="isAdmin"> (site administrator)</span>
+</h3>
 <!-- Main menu -->
 <div class="container" ng-controller="navigation as navy">
     <ul class="nav nav-pills" role="tablist">

@@ -14,7 +14,7 @@ import java.util.List;
  * Created by Oleksiy Grechnyev on 12/11/2016.
  */
 @RestController
-@RequestMapping("/resource")
+@RequestMapping("/rest/resource")
 public class DemoController {
 
     @Autowired

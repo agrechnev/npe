@@ -30,10 +30,10 @@ public class Application {
             logger.info("I am Brianna and I am a jedi !!!");
 
             // Fun with the DB
-
             // Create sampleDB if needed
 //            sampleDB.createSampleDB();
-            demoRun2.print();
+//            demoRun2.create2();
+//            demoRun2.print();
         };
     }
 

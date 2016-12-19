@@ -1,10 +1,12 @@
 package agrechnev.demorun;
 
+import agrechnev.dto.UserDto;
 import agrechnev.model.CategoryEntity;
 import agrechnev.model.UserEntity;
 import agrechnev.model.UserRole;
 import agrechnev.repo.CategoryEntityRepository;
 import agrechnev.repo.UserEntityRepository;
+import agrechnev.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,6 +24,9 @@ public class DemoRun2 {
 
     @Autowired
     CategoryEntityRepository categoryEntityRepository;
+
+    @Autowired
+    UserService userService;
 
     @Transactional
     public void create() {
@@ -58,6 +63,13 @@ public class DemoRun2 {
         UserEntity userAdmin = new UserEntity("admin", "amdin", "Site administrator",
                 "webmaster@npe.com", 10, UserRole.ADMIN);
         userEntityRepository.save(userAdmin);
+    }
+
+    public void create2() {
+        // Create a new user using service
+        UserDto newUser = new UserDto("seymour", "seymour", "Seymour Guado",
+                "seymour@yahoo.com", 0, UserRole.USER);
+        userService.create(newUser);
     }
 
     @Transactional
