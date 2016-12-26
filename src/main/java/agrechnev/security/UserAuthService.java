@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -19,11 +20,15 @@ import java.util.Optional;
 /**
  * Created by Oleksiy Grechnyev on 12/19/2016.
  * Authorize users using User Entity Repo
+ * I chose to separate this from UserService to make things more clear
  */
 @Service
 public class UserAuthService implements UserDetailsService {
     @Autowired
     UserEntityRepository userEntityRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder; // The password encoder
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -36,7 +41,7 @@ public class UserAuthService implements UserDetailsService {
             // Authorize admin:admin for empty repo
             if (username.equals("admin")) {
                 authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
-                return new User("admin", "admin", authorities);
+                return new User("admin", passwordEncoder.encode("admin"), authorities);
             } else {
                 throw new UsernameNotFoundException(username);
             }

@@ -18,5 +18,5 @@ public class AuthController {
         return user;
     }
 
-    // /logout should work by itself
+    // /logout should work by itself, how ?
 }

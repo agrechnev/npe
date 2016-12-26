@@ -1,4 +1,4 @@
-// Controller for the view home.html
+// Controller for the view login.html: Log In and Sign Up
 app.controller('login', function ($scope, $http, $rootScope, $location) {
     var self = this;
 
@@ -29,7 +29,6 @@ app.controller('login', function ($scope, $http, $rootScope, $location) {
             } else {
                 $rootScope.isAuthenticated = false;
             }
-            ;
 
             // Run function callback if not empty
             callback && callback();
@@ -43,7 +42,7 @@ app.controller('login', function ($scope, $http, $rootScope, $location) {
     };
 
     // The login() function
-    // A non-empty credentias object is created by the form in login.html
+    // A non-empty credentias object is created by the form in login.html or by the function signup()
     self.login = function () {
         authenticate(self.credentials, function () {
             if ($rootScope.isAuthenticated) {
@@ -71,7 +70,7 @@ app.controller('login', function ($scope, $http, $rootScope, $location) {
             return;
         }
 
-        // Create a full new user object
+        // Create a complete new UserDto object
         userDto.points = 0;
         userDto.role = "USER";
 
@@ -79,14 +78,22 @@ app.controller('login', function ($scope, $http, $rootScope, $location) {
         $http.post("/rest/user", userDto).then(
             function success(response) {
                 self.errorSignup = false;
+
+                // Log In the new user after successful POST only
+
+                self.credentials.username = userDto.login;
+                self.credentials.password = userDto.passw;
+
+                self.login();
+
             },
             function failure(response) {
                 self.errorSignup = true;
 
                 if (response.status == 409) {
-                    self.errorMessage = "User creation failed: Login name already in use.";
+                    self.errorMessage = "User creation failed: login name already in use.";
                 } else {
-                    self.errorMessage = "User creation failed: Server error.";
+                    self.errorMessage = "User creation failed: server error.";
                 }
             }
         );
