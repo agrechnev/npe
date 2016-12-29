@@ -94,7 +94,7 @@ public class UserService extends AbstractService<UserDto, UserEntity> {
     }
 
     /**
-     * Update entity with a Dto leaving all other fields (id, links) untouched
+     * Update entity with a Dto leaving other fields (id, links) untouched
      *
      * @param entity
      * @param dto
@@ -108,4 +108,21 @@ public class UserService extends AbstractService<UserDto, UserEntity> {
         entity.setPoints(dto.getPoints());
         entity.setRole(dto.getRole());
     }
+
+    //-----------------------------
+    // Extra operations
+
+    /**
+     * Find a user DTO by login, or null if not found
+     *
+     * @param login
+     * @return
+     */
+    public UserDto findByLogin(String login) {
+        Optional<UserEntity> o = ((UserEntityRepository) entityRepo).findByLogin(login);
+
+        return o.isPresent() ? Entity2Dto(o.get()) : null;
+    }
+
+
 }

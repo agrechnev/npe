@@ -70,11 +70,6 @@ public abstract class AbstractService<D extends Dto, E extends EntityWithId> {
             throw new ServiceException(this.getClass() + ".update() : invalid Dto object");
         }
 
-        // Check if the dto is new (e.g. username does not exist in the database)
-        if (!isNew(dto)) {
-            throw new ServiceException(this.getClass() + ".update() : Dto object is not allowed");
-        }
-
         // Check if the dto's ID is valid
         Long id = dto.getId();
         if (id == null || !entityRepo.exists(id)) {

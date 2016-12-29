@@ -13,7 +13,7 @@
 <body ng-app="npeApp">
 
 <h3 ng-show="isAuthenticated">
-    Logged in as {{authUserName}}
+    Logged in as {{authUserName}} , id = {{authUserId}}
     <span ng-show="isAdmin"> (site administrator)</span>
 </h3>
 <!-- Main menu -->
@@ -25,6 +25,8 @@
         <li ng-class="{active : navy.isActive('/blue')}"><a href="#!/blue">Blue</a></li>
 
         <li ng-show="!isAuthenticated" ng-class="{active : navy.isActive('/login')}"><a href="#!/login">Log In</a></li>
+        <li ng-show="isAuthenticated" ng-class="{active : navy.isActive('/myaccount')}">
+            <a href="#!/myaccount">My Account</a></li>
         <li ng-show="isAuthenticated"><a href="" ng-click="navy.logout()">Log Out</a></li>
     </ul>
 </div>
@@ -37,6 +39,7 @@
 <!--Controllers-->
 <script src="js/home.js"></script>
 <script src="js/users.js"></script>
+<script src="js/myaccount.js"></script>
 <script src="js/login.js"></script>
 
 </body>

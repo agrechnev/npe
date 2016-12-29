@@ -1,3 +1,4 @@
+// By Oleksiy Grechnyev
 // Controller for the view login.html: Log In and Sign Up
 app.controller('login', function ($scope, $http, $rootScope, $location) {
     var self = this;
@@ -19,13 +20,22 @@ app.controller('login', function ($scope, $http, $rootScope, $location) {
         } : {};
 
         // Authenticate on server using headers
-        $http.get('userauth', {headers: headers}).then(function (response) {
+        $http.get('/userauth', {headers: headers}).then(function (response) {
             // Check is successfull
             if (response.data.name) {
                 // Set up global variables
                 $rootScope.isAuthenticated = true;
                 $rootScope.authUserName = response.data.name;
                 $rootScope.isAdmin = (response.data.authorities[0].authority === "ROLE_ADMIN");
+
+                // Try to get user ID from the server
+                $http.get('/userid').then(function (response) {
+                        $rootScope.authUserId = response.data;
+                    },
+                    function () {
+                        $rootScope.authUserId = undefined;
+                    }
+                );
             } else {
                 $rootScope.isAuthenticated = false;
             }
@@ -73,6 +83,7 @@ app.controller('login', function ($scope, $http, $rootScope, $location) {
         // Create a complete new UserDto object
         userDto.points = 0;
         userDto.role = "USER";
+        userDto.id = 0;
 
         // Try to POST the new object
         $http.post("/rest/user", userDto).then(

@@ -23,6 +23,11 @@ app.config(function ($routeProvider, $httpProvider) {
         .when("/blue", {
             templateUrl: "blue.html"
         })
+        .when("/myaccount", {
+            templateUrl: "myaccount.html",
+            controller: 'myaccount',
+            controllerAs: 'controller'
+        })
         .when("/login", {
             templateUrl: "login.html",
             controller: 'login',
@@ -47,7 +52,7 @@ app.controller('navigation', function ($scope, $http, $location, $rootScope, $ro
     };
 
     self.logout = function () {
-        $http.post('logout', {}).finally(function () {
+        $http.post('/logout', {}).finally(function () {
             $rootScope.isAuthenticated = false;
             $location.path("/"); // Go to the main page
             $route.reload();
