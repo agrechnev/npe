@@ -1,14 +1,18 @@
 package agrechnev.sampledb;
 
 import agrechnev.model.CategoryEntity;
+import agrechnev.model.PostEntity;
 import agrechnev.model.UserEntity;
 import agrechnev.model.UserRole;
 import agrechnev.repo.CategoryEntityRepository;
+import agrechnev.repo.PostEntityRepository;
 import agrechnev.repo.UserEntityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
 
 /**
  * Created by Oleksiy Grechnyev on 12/17/2016.
@@ -26,6 +30,9 @@ public class SampleDB {
 
     @Autowired
     CategoryEntityRepository categoryEntityRepository;
+
+    @Autowired
+    PostEntityRepository postEntityRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder; // The password encoder
@@ -66,5 +73,11 @@ public class SampleDB {
         UserEntity userAdmin = new UserEntity("admin", passwordEncoder.encode("admin"),
                 "Site administrator", "webmaster@npe.com", 10, UserRole.ADMIN);
         userEntityRepository.save(userAdmin);
+
+        // Let's create some posts
+        PostEntity post1 = new PostEntity("$http.delete() with a body in Angular JS",
+                "Why cannot I ...", LocalDateTime.now(), 0);
+        post1.setUser(userBrianna);
+        postEntityRepository.save(post1);
     }
 }

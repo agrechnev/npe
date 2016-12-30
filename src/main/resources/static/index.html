@@ -19,12 +19,15 @@
 <!-- Main menu -->
 <div class="container" ng-controller="navigation as navy">
     <ul class="nav nav-pills" role="tablist">
+        <!--Pages for everyone-->
         <li ng-class="{active : navy.isActive('/')}"><a href="#!/">Home</a></li>
         <li ng-class="{active : navy.isActive('/users')}"><a href="#!/users">Users</a></li>
-        <li ng-class="{active : navy.isActive('/green')}"><a href="#!/green">Green</a></li>
-        <li ng-class="{active : navy.isActive('/blue')}"><a href="#!/blue">Blue</a></li>
+        <li ng-class="{active : navy.isActive('/search')}"><a href="#!/search">Search</a></li>
 
         <li ng-show="!isAuthenticated" ng-class="{active : navy.isActive('/login')}"><a href="#!/login">Log In</a></li>
+        <!--Pages for registered users-->
+        <li ng-show="isAuthenticated" ng-class="{active : navy.isActive('/newpost')}">
+            <a href="#!/newpost">New post</a></li>
         <li ng-show="isAuthenticated" ng-class="{active : navy.isActive('/myaccount')}">
             <a href="#!/myaccount">My Account</a></li>
         <li ng-show="isAuthenticated"><a href="" ng-click="navy.logout()">Log Out</a></li>
@@ -36,9 +39,15 @@
 
 <!--Main AngularJS script-->
 <script src="js/npe-main.js"></script>
+
+<!--Services-->
+<script src="js/auth.js"></script>
+
 <!--Controllers-->
 <script src="js/home.js"></script>
 <script src="js/users.js"></script>
+<script src="js/search.js"></script>
+<script src="js/newpost.js"></script>
 <script src="js/myaccount.js"></script>
 <script src="js/login.js"></script>
 

@@ -10,6 +10,18 @@ https://spring.io/guides/tutorials/spring-security-and-angular-js/
 
 I didn't use oauth because I wanted to learn simpler things first. For the same reason: no hateoas in my rest.
 
-Rest Resources:
+------------------
+Rest API:
 
-/rest/user : user accounts
+Authentication:
+
+GET("/userauth") = Get current user principal (current user)
+GET("/userid") = Get current user id (current user)
+POST("/logout", {}) = Log out (current user)
+
+User acccounts:
+
+GET("/rest/user") =  Get all users as list of UserDto (admin only)
+POST("/rest/user", UserDto userDto) = Create a new user (everyone)
+
+GET("/rest/user/{id}") =  Get user (UserDto) by id (current user or admin)

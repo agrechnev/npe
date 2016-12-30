@@ -7,6 +7,7 @@ import java.util.Optional;
 
 /**
  * Created by Oleksiy Grechnyev on 12/11/2016.
+ * Repo for UserEntity
  */
 public interface UserEntityRepository extends JpaRepository<UserEntity, Long> {
     Optional<UserEntity> findByLogin(String login);

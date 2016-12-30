@@ -1,0 +1,22 @@
+<h1> Ask a question </h1>
+
+<h3> Before asking anything here, Search to make sure your question has not been asked before</h3>
+
+<div class="alert alert-danger" ng-show="controller.newPostMessage">
+    {{controller.newPostMessage}}
+</div>
+<!--Account details form-->
+<form role="form" ng-submit="controller.create()">
+    <div class="form-group">
+        <label for="title">Title:</label> <input type="text" required
+                                                 class="form-control" id="title" name="title"
+                                                 ng-model="controller.newPost.title"/>
+    </div>
+    <div class="form-group">
+        <label for="text">Text:</label> <textarea rows="20" type="text" required
+                                                  class="form-control" id="text" name="text"
+                                                  ng-model="controller.newPost.text"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+
+</form>

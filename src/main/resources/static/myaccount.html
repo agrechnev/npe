@@ -2,10 +2,10 @@
   Edit or delete my account-->
 
 <!--Edit account-->
+<h1> Account details </h1>
 <div class="alert alert-danger" ng-show="controller.updateMessage">
     {{controller.updateMessage}}
 </div>
-<h1> Account details </h1>
 
 <!--Account details form-->
 <form role="form" ng-submit="controller.update()">
@@ -29,11 +29,40 @@
 </form>
 
 <hr/>
+<!--Change password-->
+<h1> Change password </h1>
+
+<div class="alert alert-danger" ng-show="controller.changePasswMessage">
+    {{controller.changePasswMessage}}
+</div>
+
+<form role="form" ng-submit="controller.changePassw()">
+    <div class="form-group">
+        <label for="oldpassw">Old password:</label> <input type="password" required
+                                                           class="form-control" id="oldpassw" name="oldpassw"
+                                                           ng-model="controller.passwChanger.oldPassw"/>
+    </div>
+    <div class="form-group">
+        <label for="newpassw">New password:</label> <input type="password" required
+                                                           class="form-control" id="newpassw" name="newpassw"
+                                                           ng-model="controller.passwChanger.newPassw"/>
+    </div>
+    <div class="form-group">
+        <label for="newpassw2">New password (repeat):</label> <input type="password" required
+                                                                     class="form-control" id="newpassw2"
+                                                                     name="newpassw2"
+                                                                     ng-model="controller.passw2"/>
+    </div>
+    <button type="submit" class="btn btn-primary">Change</button>
+</form>
+
+<hr/>
 <!--Delete account-->
+<h1> Delete my account </h1>
+
 <div class="alert alert-danger" ng-show="controller.deleteMessage">
     {{controller.deleteMessage}}
 </div>
-<h1> Delete my account </h1>
 
 <h2> Confirm with password </h2>
 

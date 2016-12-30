@@ -18,6 +18,9 @@ import java.security.Principal;
 import java.util.Collection;
 import java.util.List;
 
+import static org.springframework.http.ResponseEntity.ok;
+import static org.springframework.http.ResponseEntity.status;
+
 /**
  * User account controller
  * Created by Oleksiy Grechnyev on 12/11/2016.
@@ -30,15 +33,15 @@ public class UserController {
     @Autowired
     private PasswordEncoder passwordEncoder; // The password encoder
 
-    @Autowired
     private ExtraAuthService extraAuthService; // Some extra authentication operations
 
     private UserService userService;
 
-
+    // Constructor
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService, ExtraAuthService extraAuthService) {
         this.userService = userService;
+        this.extraAuthService = extraAuthService;
     }
 
     /**
@@ -64,13 +67,18 @@ public class UserController {
      * @return
      */
     @RequestMapping(method = RequestMethod.GET, value = "/{userId}")
-    public UserDto get(@PathVariable Long userId) {
-        UserDto result = userService.get(userId);
+    public ResponseEntity<UserDto> get(@PathVariable Long userId, Principal principal) {
+        // Check that either you are admin or logged in with the same user id
+        if (extraAuthService.isAdmin(principal) || userId.equals(extraAuthService.getId(principal))) {
+            UserDto result = userService.get(userId);
 
-        // Invalidate password
-        result.setPassw("CYBERDEMON");
+            // Invalidate password
+            result.setPassw("CYBERDEMON");
 
-        return result;
+            return ResponseEntity.ok(result);
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        }
     }
 
     ;
@@ -111,18 +119,25 @@ public class UserController {
      * @param userId
      */
     @RequestMapping(method = RequestMethod.PUT, value = "/{userId}")
-    public void update(@PathVariable Long userId, @RequestBody UserDto updator) {
+    public ResponseEntity<?> update(@PathVariable Long userId, @RequestBody UserDto updator, Principal principal) {
         logger.info("Updating user with id=" + userId);
 
-        UserDto oldDto = userService.get(userId); // Get data for this id
-        logger.info("login=" + oldDto.getLogin());
+        // Check that either you are admin or logged in with the same user id
+        if (extraAuthService.isAdmin(principal) || userId.equals(extraAuthService.getId(principal))) {
 
-        // Update 2 fields only
-        oldDto.setFullName(updator.getFullName());
-        oldDto.setEmail(updator.getEmail());
+            UserDto oldDto = userService.get(userId); // Get data for this id
+            logger.info("login=" + oldDto.getLogin());
 
-        userService.update(oldDto);
-        logger.info("Update successful");
+            // Update 2 fields only
+            oldDto.setFullName(updator.getFullName());
+            oldDto.setEmail(updator.getEmail());
+
+            userService.update(oldDto);
+            logger.info("Update successful");
+            return ok(null);
+        } else {
+            return status(HttpStatus.UNAUTHORIZED).body(null);
+        }
     }
 
     /**
@@ -133,16 +148,47 @@ public class UserController {
      * @param userId
      */
     @RequestMapping(method = RequestMethod.POST, value = "/{userId}/delete_account")
-    public ResponseEntity deleteMyAccount(@PathVariable Long userId,
-                                          @RequestBody String passw, Principal principal) {
+    public ResponseEntity<?> deleteMyAccount(@PathVariable Long userId,
+                                             @RequestBody String passw, Principal principal) {
         logger.info("Deleting user with id=" + userId);
         // Check that both userId and password are correct
         if (extraAuthService.authenticates(userId, passw) && (userId.equals(extraAuthService.getId(principal)))) {
             userService.delete(userId);
             logger.info("Delete successful");
-            return ResponseEntity.ok(null);
+            return ok(null);
         } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+            return status(HttpStatus.UNAUTHORIZED).body(null);
+        }
+    }
+
+    /**
+     * Change password of the user currently logged in or by the admin
+     *
+     * @param userId
+     * @param passwordChanger
+     * @param principal
+     * @return
+     */
+    @RequestMapping(method = RequestMethod.POST, value = "/{userId}/change_password")
+    public ResponseEntity<?> changePassword(@PathVariable Long userId,
+                                            @RequestBody PasswordChanger passwordChanger, Principal principal) {
+        if (extraAuthService.isAdmin(principal) ||
+                (extraAuthService.authenticates(userId, passwordChanger.oldPassw) &&
+                        userId.equals(extraAuthService.getId(principal)))) {
+            logger.info("Changing password of the user id=" + userId);
+
+            UserDto oldDto = userService.get(userId); // Get data for this id
+            logger.info("login=" + oldDto.getLogin());
+
+            // Update password only
+            oldDto.setPassw(passwordEncoder.encode(passwordChanger.newPassw));
+
+            userService.update(oldDto);
+            logger.info("Update successful");
+            return ok(null);
+
+        } else {
+            return status(HttpStatus.UNAUTHORIZED).body(null);
         }
     }
 
@@ -159,4 +205,6 @@ public class UserController {
         logger.info("Delete successful");
 
     }
+
+
 }

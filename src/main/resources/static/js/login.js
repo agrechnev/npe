@@ -1,6 +1,6 @@
 // By Oleksiy Grechnyev
 // Controller for the view login.html: Log In and Sign Up
-app.controller('login', function ($scope, $http, $rootScope, $location) {
+app.controller('login', function ($scope, $http, $rootScope, $location, auth) {
     var self = this;
 
     // No credentials before you actually log in
@@ -10,51 +10,10 @@ app.controller('login', function ($scope, $http, $rootScope, $location) {
     self.newUser = {};
     self.passw2 = "";
 
-    // Try to authenticate credentials with the server
-    var authenticate = function (credentials, callback) {
-        // If nonempty credentials, perform base-64 encoding
-        // This is supposed to "log in" Spring Security
-        var headers = credentials ? {
-            authorization: "Basic " +
-            btoa(credentials.username + ":" + credentials.password)
-        } : {};
-
-        // Authenticate on server using headers
-        $http.get('/userauth', {headers: headers}).then(function (response) {
-            // Check is successfull
-            if (response.data.name) {
-                // Set up global variables
-                $rootScope.isAuthenticated = true;
-                $rootScope.authUserName = response.data.name;
-                $rootScope.isAdmin = (response.data.authorities[0].authority === "ROLE_ADMIN");
-
-                // Try to get user ID from the server
-                $http.get('/userid').then(function (response) {
-                        $rootScope.authUserId = response.data;
-                    },
-                    function () {
-                        $rootScope.authUserId = undefined;
-                    }
-                );
-            } else {
-                $rootScope.isAuthenticated = false;
-            }
-
-            // Run function callback if not empty
-            callback && callback();
-
-        }, function () {
-            // get operation had an error
-            $rootScope.isAuthenticated = false;
-            // Run callback anyway
-            callback && callback();
-        });
-    };
-
     // The login() function
     // A non-empty credentias object is created by the form in login.html or by the function signup()
     self.login = function () {
-        authenticate(self.credentials, function () {
+        auth.authenticate(self.credentials, function () {
             if ($rootScope.isAuthenticated) {
                 // Authentication success
                 $location.path("/"); // Go to the main page
@@ -71,7 +30,7 @@ app.controller('login', function ($scope, $http, $rootScope, $location) {
     // The signup() function
     // Nonempty newUser object is created by the sign up form in login.html
     self.signup = function () {
-        userDto = self.newUser;
+        var userDto = self.newUser;
 
         // Check that passwords match
         if (userDto.passw != self.passw2) {

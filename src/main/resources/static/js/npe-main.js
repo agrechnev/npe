@@ -17,11 +17,15 @@ app.config(function ($routeProvider, $httpProvider) {
             controller: 'users',
             controllerAs: 'controller'
         })
-        .when("/green", {
-            templateUrl: "green.html"
+        .when("/search", {
+            templateUrl: "search.html",
+            controller: 'search',
+            controllerAs: 'controller'
         })
-        .when("/blue", {
-            templateUrl: "blue.html"
+        .when("/newpost", {
+            templateUrl: "newpost.html",
+            controller: 'newpost',
+            controllerAs: 'controller'
         })
         .when("/myaccount", {
             templateUrl: "myaccount.html",
