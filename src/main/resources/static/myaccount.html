@@ -1,76 +1,79 @@
 <!--By Oleksiy Grechnyev
   Edit or delete my account-->
 
-<!--Edit account-->
-<h1> Account details </h1>
-<div class="alert alert-danger" ng-show="controller.updateMessage">
-    {{controller.updateMessage}}
+<div class="container">
+
+    <!--Edit account-->
+    <h1> Account details </h1>
+    <div class="alert alert-danger" ng-show="controller.updateMessage">
+        {{controller.updateMessage}}
+    </div>
+
+    <!--Account details form-->
+    <form role="form" ng-submit="controller.update()">
+        <div class="form-group">
+            <label for="login">Login Name:</label> <input type="text" required
+                                                          class="form-control" id="login" name="login"
+                                                          ng-model="controller.user.login" readonly/>
+        </div>
+        <div class="form-group">
+            <label for="fullName">Full Name:</label> <input type="text" required
+                                                            class="form-control" id="fullName" name="fullName"
+                                                            ng-model="controller.user.fullName"/>
+        </div>
+        <div class="form-group">
+            <label for="email">E-mail:</label> <input type="email" required
+                                                      class="form-control" id="email" name="email"
+                                                      ng-model="controller.user.email"/>
+        </div>
+        <button type="submit" class="btn btn-primary">Change</button>
+
+    </form>
+
+    <hr/>
+    <!--Change password-->
+    <h1> Change password </h1>
+
+    <div class="alert alert-danger" ng-show="controller.changePasswMessage">
+        {{controller.changePasswMessage}}
+    </div>
+
+    <form role="form" ng-submit="controller.changePassw()">
+        <div class="form-group">
+            <label for="oldpassw">Old password:</label> <input type="password" required
+                                                               class="form-control" id="oldpassw" name="oldpassw"
+                                                               ng-model="controller.passwChanger.oldPassw"/>
+        </div>
+        <div class="form-group">
+            <label for="newpassw">New password:</label> <input type="password" required
+                                                               class="form-control" id="newpassw" name="newpassw"
+                                                               ng-model="controller.passwChanger.newPassw"/>
+        </div>
+        <div class="form-group">
+            <label for="newpassw2">New password (repeat):</label> <input type="password" required
+                                                                         class="form-control" id="newpassw2"
+                                                                         name="newpassw2"
+                                                                         ng-model="controller.passw2"/>
+        </div>
+        <button type="submit" class="btn btn-primary">Change</button>
+    </form>
+
+    <hr/>
+    <!--Delete account-->
+    <h1> Delete my account </h1>
+
+    <div class="alert alert-danger" ng-show="controller.deleteMessage">
+        {{controller.deleteMessage}}
+    </div>
+
+    <h2> Confirm with password </h2>
+
+    <form role="form" ng-submit="controller.delete()">
+        <div class="form-group">
+            <label for="dpassw">Password:</label> <input type="password" required
+                                                         class="form-control" id="dpassw" name="dpassw"
+                                                         ng-model="controller.passw"/>
+        </div>
+        <button type="submit" class="btn btn-primary">Delete</button>
+    </form>
 </div>
-
-<!--Account details form-->
-<form role="form" ng-submit="controller.update()">
-    <div class="form-group">
-        <label for="login">Login Name:</label> <input type="text" required
-                                                      class="form-control" id="login" name="login"
-                                                      ng-model="controller.user.login" readonly/>
-    </div>
-    <div class="form-group">
-        <label for="fullName">Full Name:</label> <input type="text" required
-                                                        class="form-control" id="fullName" name="fullName"
-                                                        ng-model="controller.user.fullName"/>
-    </div>
-    <div class="form-group">
-        <label for="email">E-mail:</label> <input type="email" required
-                                                  class="form-control" id="email" name="email"
-                                                  ng-model="controller.user.email"/>
-    </div>
-    <button type="submit" class="btn btn-primary">Change</button>
-
-</form>
-
-<hr/>
-<!--Change password-->
-<h1> Change password </h1>
-
-<div class="alert alert-danger" ng-show="controller.changePasswMessage">
-    {{controller.changePasswMessage}}
-</div>
-
-<form role="form" ng-submit="controller.changePassw()">
-    <div class="form-group">
-        <label for="oldpassw">Old password:</label> <input type="password" required
-                                                           class="form-control" id="oldpassw" name="oldpassw"
-                                                           ng-model="controller.passwChanger.oldPassw"/>
-    </div>
-    <div class="form-group">
-        <label for="newpassw">New password:</label> <input type="password" required
-                                                           class="form-control" id="newpassw" name="newpassw"
-                                                           ng-model="controller.passwChanger.newPassw"/>
-    </div>
-    <div class="form-group">
-        <label for="newpassw2">New password (repeat):</label> <input type="password" required
-                                                                     class="form-control" id="newpassw2"
-                                                                     name="newpassw2"
-                                                                     ng-model="controller.passw2"/>
-    </div>
-    <button type="submit" class="btn btn-primary">Change</button>
-</form>
-
-<hr/>
-<!--Delete account-->
-<h1> Delete my account </h1>
-
-<div class="alert alert-danger" ng-show="controller.deleteMessage">
-    {{controller.deleteMessage}}
-</div>
-
-<h2> Confirm with password </h2>
-
-<form role="form" ng-submit="controller.delete()">
-    <div class="form-group">
-        <label for="dpassw">Password:</label> <input type="password" required
-                                                     class="form-control" id="dpassw" name="dpassw"
-                                                     ng-model="controller.passw"/>
-    </div>
-    <button type="submit" class="btn btn-primary">Delete</button>
-</form>

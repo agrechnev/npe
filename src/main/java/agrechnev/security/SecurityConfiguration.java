@@ -55,6 +55,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 // Posts
                 .antMatchers(HttpMethod.POST, "/rest/post").authenticated()  //  Create new post
                 .antMatchers(HttpMethod.GET, "/rest/post").permitAll()  //  Get all posts
+                .antMatchers(HttpMethod.GET, "/rest/post/*").permitAll()  //  Get one post
 
                 //TODO: Delete later!
                 .antMatchers(HttpMethod.GET, "/rest/resource").authenticated() // Delete later!

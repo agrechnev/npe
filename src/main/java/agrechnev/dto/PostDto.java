@@ -22,6 +22,8 @@ public class PostDto implements Dto {
 
     Long userId; // Corresponds to PostEntity.user
 
+    String userLogin; // The user login corresponding to userId
+
     //-------------- Constructors ------------------
 
     public PostDto() {
@@ -86,6 +88,13 @@ public class PostDto implements Dto {
         this.userId = userId;
     }
 
+    public String getUserLogin() {
+        return userLogin;
+    }
+
+    public void setUserLogin(String userLogin) {
+        this.userLogin = userLogin;
+    }
     //--------------- toString-----------------------
 
     //--------------- equals + hashCode -------------

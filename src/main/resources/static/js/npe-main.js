@@ -7,6 +7,7 @@ var app = angular.module("npeApp", ["ngRoute"]);
 app.config(function ($routeProvider, $httpProvider) {
     // Set Up Routing
     $routeProvider
+    // Normal pages
         .when("/", {
             templateUrl: "home.html",
             controller: 'home',
@@ -35,6 +36,12 @@ app.config(function ($routeProvider, $httpProvider) {
         .when("/login", {
             templateUrl: "login.html",
             controller: 'login',
+            controllerAs: 'controller'
+        })
+        // Special pages, not in the menu
+        .when("/postview/:id", {
+            templateUrl: "postview.html",
+            controller: 'postview',
             controllerAs: 'controller'
         });
 

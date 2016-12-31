@@ -3,6 +3,7 @@ package agrechnev.service;
 import agrechnev.dto.PostDto;
 import agrechnev.helpers.Util;
 import agrechnev.model.PostEntity;
+import agrechnev.model.UserEntity;
 import agrechnev.repo.PostEntityRepository;
 import agrechnev.repo.UserEntityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,8 +74,13 @@ public class PostService extends AbstractService<PostDto, PostEntity> {
         PostDto dto = new PostDto(entity.getTitle(), entity.getText(), entity.getTimeStamp(), entity.getRating());
         //Set id
         dto.setId(entity.getId());
+
         //Set user id
-        dto.setUserId(entity.getUser().getId());
+        UserEntity user = entity.getUser();
+        dto.setUserId(user.getId());
+
+        // Set user login
+        dto.setUserLogin(user.getLogin());
 
         return dto;
     }
