@@ -68,6 +68,9 @@ public class UserController {
      */
     @RequestMapping(method = RequestMethod.GET, value = "/{userId}")
     public ResponseEntity<UserDto> get(@PathVariable Long userId, Principal principal) {
+
+        if (principal == null) return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+
         // Check that either you are admin or logged in with the same user id
         if (extraAuthService.isAdmin(principal) || userId.equals(extraAuthService.getId(principal))) {
             UserDto result = userService.get(userId);

@@ -45,7 +45,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 // REST API
                 // Users
                 .antMatchers(HttpMethod.POST, "/rest/user").permitAll() // Create a new user
-                .antMatchers(HttpMethod.GET, "/rest/user").permitAll()  // TODO: Get all users
+                .antMatchers(HttpMethod.GET, "/rest/user").hasRole("ADMIN")  //  Get all users
                 .antMatchers(HttpMethod.DELETE, "/rest/user/*").hasRole("ADMIN")  // Admin delete
                 .antMatchers(HttpMethod.POST, "/rest/user/*/delete_account").authenticated() // Delete my account
                 .antMatchers(HttpMethod.POST, "/rest/user/*/change_password").authenticated() // Change password

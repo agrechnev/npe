@@ -49,6 +49,9 @@ dependencies {
 
     testCompile("org.springframework.boot:spring-boot-starter-test")
 
+    // https://mvnrepository.com/artifact/org.springframework.security/spring-security-test
+    compile group: 'org.springframework.security', name: 'spring-security-test', version: '4.1.3.RELEASE'
+
 // MySQL
 
     // https://mvnrepository.com/artifact/mysql/mysql-connector-java
