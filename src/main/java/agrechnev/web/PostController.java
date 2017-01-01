@@ -16,6 +16,8 @@ import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.Collection;
 
+import static org.springframework.http.ResponseEntity.status;
+
 /**
  * Posts controller
  * Created by Oleksiy Grechnyev on 12/29/2016.
@@ -66,7 +68,7 @@ public class PostController {
 
         // Set the user id
         Long userId = extraAuthService.getId(principal);
-        if (userId == null) return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        if (userId == null) return status(HttpStatus.UNAUTHORIZED).body(null);
 
         postDto.setUserId(userId);
 
@@ -90,7 +92,72 @@ public class PostController {
      * @return
      */
     @RequestMapping(method = RequestMethod.GET, value = "/{postId}")
-    public PostDto get(@PathVariable Long postId) {
-        return postService.get(postId);
+    public ResponseEntity<PostDto> get(@PathVariable Long postId, Principal principal) {
+
+        PostDto postDto = postService.get(postId);
+
+        if (postDto == null) return status(HttpStatus.NOT_FOUND).body(null);
+
+        // Check if the post belongs to the current user if logged in
+        if (principal != null && postDto.getUserId().equals(extraAuthService.getId(principal))) {
+            postDto.setEditable(true);
+        }
+
+        return ResponseEntity.ok(postDto);
+    }
+
+    /**
+     * Delete a post (post owner or admin)
+     *
+     * @param postId
+     * @param principal
+     * @return
+     */
+    @RequestMapping(method = RequestMethod.DELETE, value = "/{postId}")
+    public ResponseEntity<?> delete(@PathVariable Long postId, Principal principal) {
+        // Allowed for post owner or admin
+        logger.info("Deleting post :" + postId);
+
+        // Get this post
+        PostDto postDto = postService.get(postId);
+        if (postDto == null) return status(HttpStatus.NOT_FOUND).body(null);
+
+        // Check if admin or owner
+        if (extraAuthService.isAdmin(principal) || postDto.getUserId().equals(extraAuthService.getId(principal))) {
+            postService.delete(postId);
+            return ResponseEntity.ok(null);
+        } else {
+            return status(HttpStatus.UNAUTHORIZED).body(null);
+        }
+    }
+
+    /**
+     * Update a post (post owner only)
+     *
+     * @param postId
+     * @param updator
+     * @param principal
+     * @return
+     */
+    @RequestMapping(method = RequestMethod.PUT, value = "/{postId}")
+    public ResponseEntity<?> update(@PathVariable Long postId, @RequestBody PostDto updator, Principal principal) {
+        // Allowed for post owner only
+        logger.info("Updating post :" + postId);
+
+        // Get this post (old version)
+        PostDto oldDto = postService.get(postId);
+        if (oldDto == null) return status(HttpStatus.NOT_FOUND).body(null);
+
+        // Check if admin or owner
+        if (oldDto.getUserId().equals(extraAuthService.getId(principal))) {
+
+            // Update (text only at present)
+            oldDto.setText(updator.getText());
+
+            postService.update(oldDto);
+            return ResponseEntity.ok(null);
+        } else {
+            return status(HttpStatus.UNAUTHORIZED).body(null);
+        }
     }
 }

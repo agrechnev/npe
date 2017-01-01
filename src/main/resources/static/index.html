@@ -12,12 +12,14 @@
 </head>
 <body ng-app="npeApp">
 
-<h3 ng-show="isAuthenticated">
-    Logged in as {{authUserName}} , id = {{authUserId}}
-    <span ng-show="isAdmin"> (site administrator)</span>
-</h3>
 <!-- Main menu -->
 <div class="container" ng-controller="navigation as navy">
+
+    <h4 ng-show="isAuthenticated">
+        Logged in as {{authUserName}} , id = {{authUserId}}
+        <span ng-show="isAdmin"> (site administrator)</span>
+    </h4>
+
     <ul class="nav nav-pills" role="tablist">
         <!--Pages for everyone-->
         <li ng-class="{active : navy.isActive('/')}"><a href="#!/">Home</a></li>

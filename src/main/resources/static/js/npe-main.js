@@ -51,11 +51,12 @@ app.config(function ($routeProvider, $httpProvider) {
 });
 
 // Navigation controller.
-app.controller('navigation', function ($scope, $http, $location, $rootScope, $route) {
+app.controller('navigation', function ($scope, $http, $location, $rootScope, $route, auth) {
     var self = this;
 
-    // Not authenticated in the beginning
-    $rootScope.isAuthenticated = false;
+    // Check if I am already authenticated
+    // Run authenticate w/o credentials
+    auth.authenticate(null, null);
 
     // Check the current location (to show the active entry in nav-pills menu)
     self.isActive = function (viewLocation) {

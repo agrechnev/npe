@@ -22,11 +22,18 @@ public class PostDto implements Dto {
 
     Long userId; // Corresponds to PostEntity.user
 
+    // Extra data: userd on read operation only
+
     String userLogin; // The user login corresponding to userId
+
+    // Does this post belong to the user currently logged in ?
+    // Set by the Web controller
+    boolean editable;
 
     //-------------- Constructors ------------------
 
     public PostDto() {
+        this.editable = false;
     }
 
     public PostDto(String title, String text, LocalDateTime timeStamp, int rating) {
@@ -34,6 +41,8 @@ public class PostDto implements Dto {
         this.text = text;
         this.timeStamp = timeStamp;
         this.rating = rating;
+
+        this.editable = false;
     }
 
     //--------------- getters + setters-------------
@@ -95,6 +104,15 @@ public class PostDto implements Dto {
     public void setUserLogin(String userLogin) {
         this.userLogin = userLogin;
     }
+
+    public boolean getEditable() {
+        return editable;
+    }
+
+    public void setEditable(boolean editable) {
+        this.editable = editable;
+    }
+
     //--------------- toString-----------------------
 
     //--------------- equals + hashCode -------------

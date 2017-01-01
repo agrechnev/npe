@@ -2,6 +2,8 @@ package agrechnev.service;
 
 import agrechnev.dto.Dto;
 import agrechnev.model.EntityWithId;
+import agrechnev.service.exception.InvalidDtoCreateException;
+import agrechnev.service.exception.InvalidDtoUpdateException;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,12 +37,12 @@ public abstract class AbstractService<D extends Dto, E extends EntityWithId> {
     public Long create(D dto) {
         // Check if the dto is valid
         if (!isValid(dto)) {
-            throw new ServiceException(this.getClass() + ".create() : invalid Dto object");
+            throw new InvalidDtoCreateException(this.getClass() + ".create() : invalid Dto object");
         }
 
         // Check if the dto is new (e.g. username does not exist in the database)
         if (!isNew(dto)) {
-            throw new ServiceException(this.getClass() + ".create() : Dto object is not allowed");
+            throw new InvalidDtoCreateException(this.getClass() + ".create() : Dto object is not allowed");
         }
 
         //Convert Dto to entity
@@ -55,7 +57,6 @@ public abstract class AbstractService<D extends Dto, E extends EntityWithId> {
         return id;
     }
 
-    ;
 
     /**
      * Update a Dto, uses id from Dto
@@ -67,13 +68,13 @@ public abstract class AbstractService<D extends Dto, E extends EntityWithId> {
     public void update(D dto) {
         // Check if the dto is valid
         if (!isValid(dto)) {
-            throw new ServiceException(this.getClass() + ".update() : invalid Dto object");
+            throw new InvalidDtoUpdateException(this.getClass() + ".update() : invalid Dto object");
         }
 
         // Check if the dto's ID is valid
         Long id = dto.getId();
         if (id == null || !entityRepo.exists(id)) {
-            throw new ServiceException(this.getClass() + ".update() : invalid ID");
+            throw new InvalidDtoUpdateException(this.getClass() + ".update() : invalid ID");
         }
 
         // Get the entity
@@ -86,11 +87,11 @@ public abstract class AbstractService<D extends Dto, E extends EntityWithId> {
         entityRepo.flush();
     }
 
-    ;
 
     /**
      * Delete a Dto by id
      *
+     * Throws something on wrong id
      * @param id
      */
     @Transactional
@@ -98,20 +99,20 @@ public abstract class AbstractService<D extends Dto, E extends EntityWithId> {
         entityRepo.delete(id);
     }
 
-    ;
 
     /**
      * Get a Dto by id
+     * null (no exceptions) if not found
      *
      * @param id
      * @return
      */
     @Transactional
     public D get(Long id) {
-        return Entity2Dto(entityRepo.getOne(id));
+        E entity = entityRepo.findOne(id);
+        return entity == null ? null : Entity2Dto(entity);
     }
 
-    ;
 
     /**
      * Get all Dtos
@@ -124,7 +125,6 @@ public abstract class AbstractService<D extends Dto, E extends EntityWithId> {
 
     }
 
-    ;
 
     /**
      * Check if a Dto with given id exists
@@ -136,7 +136,6 @@ public abstract class AbstractService<D extends Dto, E extends EntityWithId> {
         return entityRepo.exists(id);
     }
 
-    ;
 
     //--------------- Abstract methods ---------------------
 
@@ -159,7 +158,6 @@ public abstract class AbstractService<D extends Dto, E extends EntityWithId> {
         return true;
     }
 
-    ;
 
     /**
      * Convert dto to entity (I chose to do things by hand, not with dozer or something)

@@ -72,6 +72,8 @@ public class UserController {
         if (extraAuthService.isAdmin(principal) || userId.equals(extraAuthService.getId(principal))) {
             UserDto result = userService.get(userId);
 
+            if (result == null) return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+
             // Invalidate password
             result.setPassw("CYBERDEMON");
 
@@ -126,6 +128,10 @@ public class UserController {
         if (extraAuthService.isAdmin(principal) || userId.equals(extraAuthService.getId(principal))) {
 
             UserDto oldDto = userService.get(userId); // Get data for this id
+
+            if (oldDto == null) return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+
+
             logger.info("login=" + oldDto.getLogin());
 
             // Update 2 fields only
@@ -153,7 +159,7 @@ public class UserController {
         logger.info("Deleting user with id=" + userId);
         // Check that both userId and password are correct
         if (extraAuthService.authenticates(userId, passw) && (userId.equals(extraAuthService.getId(principal)))) {
-            userService.delete(userId);
+            userService.delete(userId); // Exception here if wrong id
             logger.info("Delete successful");
             return ok(null);
         } else {
@@ -198,12 +204,15 @@ public class UserController {
      * @param userId
      */
     @RequestMapping(method = RequestMethod.DELETE, value = "/{userId}")
-    public void delete(@PathVariable Long userId) {
+    public ResponseEntity<?> delete(@PathVariable Long userId) {
         logger.info("(Admin) Deleting user with id=" + userId);
+
+        if (!userService.exists(userId)) return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 
         userService.delete(userId);
         logger.info("Delete successful");
 
+        return ResponseEntity.ok(null);
     }
 
 

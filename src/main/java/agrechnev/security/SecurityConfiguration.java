@@ -34,7 +34,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
                 .authorizeRequests()
 
-                // Static AngularJS pages
+                // Static HTML+AngularJS pages
                 .antMatchers("/*.html", "/", "/ajs/*.js").permitAll()
 
                 // Login and logout API (AuthController)
@@ -44,7 +44,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
                 // REST API
                 // Users
-                .antMatchers(HttpMethod.POST, "/rest/user").permitAll() // Create new user
+                .antMatchers(HttpMethod.POST, "/rest/user").permitAll() // Create a new user
                 .antMatchers(HttpMethod.GET, "/rest/user").permitAll()  // TODO: Get all users
                 .antMatchers(HttpMethod.DELETE, "/rest/user/*").hasRole("ADMIN")  // Admin delete
                 .antMatchers(HttpMethod.POST, "/rest/user/*/delete_account").authenticated() // Delete my account
@@ -53,9 +53,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/rest/user/*").authenticated() // Get my account data
 
                 // Posts
-                .antMatchers(HttpMethod.POST, "/rest/post").authenticated()  //  Create new post
+                .antMatchers(HttpMethod.POST, "/rest/post").authenticated()  //  Create a new post
                 .antMatchers(HttpMethod.GET, "/rest/post").permitAll()  //  Get all posts
                 .antMatchers(HttpMethod.GET, "/rest/post/*").permitAll()  //  Get one post
+                .antMatchers(HttpMethod.DELETE, "/rest/post/*").authenticated()  //  Delete post
+                .antMatchers(HttpMethod.PUT, "/rest/post/*").authenticated()  //  Update post
 
                 //TODO: Delete later!
                 .antMatchers(HttpMethod.GET, "/rest/resource").authenticated() // Delete later!

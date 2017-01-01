@@ -2,7 +2,29 @@
 
     <h3>{{controller.post.title}} </h3>
     <h5>{{controller.post.userLogin}} {{controller.timeToString(controller.post.timeStamp)}} </h5>
-    <div class="panel panel-default">
-        <div class="panel-body">{{controller.post.text}}</div>
+
+    <!--Normal text viewer: text + optional 2 buttons-->
+    <div ng-show="!controller.editingPost">
+        <div class="panel panel-default">
+            <div class="panel-body">{{controller.post.text}}</div>
+        </div>
+        <button class="btn btn-primary" ng-show="controller.post.editable"
+                ng-click="controller.edit()">Edit
+        </button>
+
+        <button class="btn btn-primary" ng-show="controller.post.editable || isAdmin"
+                ng-click="controller.delete()">Delete
+        </button>
     </div>
+    <!--Text editing form-->
+    <form role="form" ng-submit="controller.update()" ng-show="controller.editingPost">
+        <div class="form-group">
+            <label for="text">Text:</label> <textarea rows="15" type="text" required
+                                                      class="form-control" id="text" name="text"
+                                                      ng-model="controller.updatedText"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Apply</button>
+        <button type="cancel" class="btn btn-primary" ng-click="controller.cancel()">Cancel</button>
+
+    </form>
 </div>

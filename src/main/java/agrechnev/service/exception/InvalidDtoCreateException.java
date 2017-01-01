@@ -1,4 +1,4 @@
-package agrechnev.service;
+package agrechnev.service.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -7,12 +7,12 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  * Created by Oleksiy Grechnyev on 12/18/2016.
  */
 @ResponseStatus(HttpStatus.CONFLICT)
-public class ServiceException extends RuntimeException {
-    public ServiceException(String message) {
+public class InvalidDtoCreateException extends RuntimeException {
+    public InvalidDtoCreateException(String message) {
         super(message);
     }
 
-    public ServiceException(String message, Throwable cause) {
+    public InvalidDtoCreateException(String message, Throwable cause) {
         super(message, cause);
     }
 }
