@@ -61,7 +61,7 @@ public class UserController {
     }
 
     /**
-     * Get user Dto by id
+     * Get user Dto by id (this user or admin)
      *
      * @param userId
      * @return
@@ -69,12 +69,14 @@ public class UserController {
     @RequestMapping(method = RequestMethod.GET, value = "/{userId}")
     public ResponseEntity<UserDto> get(@PathVariable Long userId, Principal principal) {
 
+        // 401: This shouldn't happen normally due to Spring Security
         if (principal == null) return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
 
         // Check that either you are admin or logged in with the same user id
         if (extraAuthService.isAdmin(principal) || userId.equals(extraAuthService.getId(principal))) {
             UserDto result = userService.get(userId);
 
+            // 404 if no such record, (could happen for admin)
             if (result == null) return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 
             // Invalidate password
@@ -82,7 +84,8 @@ public class UserController {
 
             return ResponseEntity.ok(result);
         } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+            // 403 forbidden if you're the wrong user
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
         }
     }
 
@@ -145,7 +148,7 @@ public class UserController {
             logger.info("Update successful");
             return ok(null);
         } else {
-            return status(HttpStatus.UNAUTHORIZED).body(null);
+            return status(HttpStatus.FORBIDDEN).body(null);
         }
     }
 
@@ -166,7 +169,7 @@ public class UserController {
             logger.info("Delete successful");
             return ok(null);
         } else {
-            return status(HttpStatus.UNAUTHORIZED).body(null);
+            return status(HttpStatus.FORBIDDEN).body(null);
         }
     }
 
@@ -197,7 +200,7 @@ public class UserController {
             return ok(null);
 
         } else {
-            return status(HttpStatus.UNAUTHORIZED).body(null);
+            return status(HttpStatus.FORBIDDEN).body(null);
         }
     }
 

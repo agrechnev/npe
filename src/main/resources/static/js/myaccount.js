@@ -49,7 +49,7 @@ app.controller('myaccount', function ($scope, $http, $rootScope, $location, auth
                 $route.reload();
             });
         }, function (response) {
-            if (response.status == 401) {
+            if (response.status == 403) {
                 self.deleteMessage = "Wrong password.";
             } else {
                 self.deleteMessage = "Server error.";
@@ -96,7 +96,7 @@ app.controller('myaccount', function ($scope, $http, $rootScope, $location, auth
                 });
             });
         }, function failure(response) {
-            if (response.status == 401) {
+            if (response.status == 403) {
                 self.changePasswMessage = "Wrong old password.";
             } else {
                 self.changePasswMessage = "Server error.";
