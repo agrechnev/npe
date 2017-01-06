@@ -131,7 +131,9 @@ public class UserController {
         logger.info("Updating user with id=" + userId);
 
         // Check that either you are admin or logged in with the same user id
-        if (extraAuthService.isAdmin(principal) || userId.equals(extraAuthService.getId(principal))) {
+
+        boolean isAdmin = extraAuthService.isAdmin(principal);
+        if (isAdmin || userId.equals(extraAuthService.getId(principal))) {
 
             UserDto oldDto = userService.get(userId); // Get data for this id
 
@@ -140,9 +142,15 @@ public class UserController {
 
             logger.info("login=" + oldDto.getLogin());
 
-            // Update 2 fields only
+            // Update 2 fields only by default
             oldDto.setFullName(updator.getFullName());
             oldDto.setEmail(updator.getEmail());
+
+            // 2 more fields if admin
+            if (isAdmin) {
+                oldDto.setPoints(updator.getPoints());
+                oldDto.setRole(updator.getRole());
+            }
 
             userService.update(oldDto);
             logger.info("Update successful");

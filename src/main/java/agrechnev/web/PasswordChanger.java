@@ -7,4 +7,12 @@ package agrechnev.web;
 public class PasswordChanger {
     public String oldPassw;
     public String newPassw;
+
+    public PasswordChanger() {
+    }
+
+    public PasswordChanger(String oldPassw, String newPassw) {
+        this.oldPassw = oldPassw;
+        this.newPassw = newPassw;
+    }
 }
