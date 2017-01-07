@@ -4,6 +4,8 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by Oleksiy Grechnyev on 12/10/2016.
@@ -28,6 +30,10 @@ public class PostEntity implements EntityWithId {
     LocalDateTime timeStamp;
 
     int rating; // Post rating, normally starts from 0
+
+    // Categories of this post
+    @ManyToMany
+    private Set<CategoryEntity> categories = new HashSet<>();
 
     //-------------- Links -----------------
     @ManyToOne
@@ -98,6 +104,13 @@ public class PostEntity implements EntityWithId {
         this.user = user;
     }
 
+    public Set<CategoryEntity> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(Set<CategoryEntity> categories) {
+        this.categories = categories;
+    }
 
     //--------------- toString-----------------------
 

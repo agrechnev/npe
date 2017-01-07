@@ -151,8 +151,9 @@ public class PostController {
         // Check if admin or owner
         if (oldDto.getUserId().equals(extraAuthService.getId(principal))) {
 
-            // Update (text only at present)
+            // Update (text anc categories)
             oldDto.setText(updator.getText());
+            oldDto.setCategories(updator.getCategories());
 
             postService.update(oldDto);
             return ResponseEntity.ok(null);

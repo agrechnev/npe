@@ -1,6 +1,5 @@
 package agrechnev;
 
-import agrechnev.demorun.DemoRun2;
 import agrechnev.sampledb.SampleDB;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,17 +22,18 @@ public class Application {
         ApplicationContext context = SpringApplication.run(Application.class, args);
     }
 
-
+    /*
+     Startup
+     */
     @Bean
-    public CommandLineRunner demo(DemoRun2 demoRun2, SampleDB sampleDB) {
+    public CommandLineRunner demo(SampleDB sampleDB) {
         return args -> {
-            logger.info("I am Brianna and I am a jedi !!!");
+            // If you want something to run at startup, put it here
 
-            // Fun with the DB
+//            logger.info("I am Brianna and I am a jedi !!!");
+
             // Create sampleDB if needed
 //            sampleDB.createSampleDB();
-//            demoRun2.create2();
-//            demoRun2.print();
 
         };
     }

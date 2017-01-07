@@ -1,8 +1,14 @@
 <div class="container">
-<h2> All posts: </h2>
+    <h2> All posts: </h2>
     <ul class="list-group">
         <li class="list-group-item" ng-repeat="x in controller.allPosts">
-            <a href="#!/postview/{{x.id}}"> {{ x.title }} </a>
-    </li>
-</ul>
+            <a href="#!/postview/{{x.id}}"> {{ x.title }} </a> <br/>
+
+            <div class="text-warning">
+              <span ng-repeat="c in controller.catAsList(x)">
+                 {{c}} &nbsp; &nbsp;
+              </span>
+            </div>
+        </li>
+    </ul>
 </div>

@@ -38,10 +38,10 @@ More info:
 
 This is a Rest Resource Server written on Java+Spring Boot+Hibernate.
 
-Front End: A simple single-page AngularJS front end (directory src/main/resources/static)
+Front End: A simple single-page AngularJS front end (directory src/main/resources/static).
+Nothing fancy, simple bootstrappish look.
 
 Unit Tests: Contains unit tests for classes UserController.
-
 This is a demonstration of unit testing with Spring Boot and Spring Security. Uses Mockito+Hamcrest, of course.
 
 Spring Security: I opted to use a simple password-based approach, outlined here
@@ -77,6 +77,10 @@ Posts:
 GET("/rest/post") =  Get all posts as a list of PostDto (open)
 POST("/rest/post", PostDto postDto) =  Create a new post (current user)
 GET("/rest/post/{id}") =  Get a post (PostDto) by id (open)
+
+Categories:
+
+GET("/rest/category") =  Get all categories as a list of CategoryDto (open)
 
 Sample DB:
 

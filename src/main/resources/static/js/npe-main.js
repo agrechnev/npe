@@ -18,6 +18,11 @@ app.config(function ($routeProvider, $httpProvider) {
             controller: 'search',
             controllerAs: 'controller'
         })
+        .when("/categories", {
+            templateUrl: "categories.html",
+            controller: 'categories',
+            controllerAs: 'controller'
+        })
         .when("/newpost", {
             templateUrl: "newpost.html",
             controller: 'newpost',

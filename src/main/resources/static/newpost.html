@@ -9,11 +9,34 @@
     </div>
     <!--New Post Form-->
     <form role="form" ng-submit="controller.create()">
+        <!--Title-->
         <div class="form-group">
             <label for="title">Title:</label> <input type="text" required
                                                      class="form-control" id="title" name="title"
                                                      ng-model="controller.newPost.title"/>
         </div>
+        <!--Category editor-->
+        <div class="form-group">
+            <label for="cats">Categories:</label>
+
+            <select class="form-control" id="cats" name="cats" size="5"
+                    ng-model="controller.selectedCat1"
+                    ng-options="controller.catById(x) for x in controller.updatedCats">
+            </select>
+        </div>
+
+        <div class="form-inline">
+            <button type="button" class="btn btn-primary" ng-click="controller.deleteCat()"> Delete</button>
+
+            <button type="button" class="btn btn-primary" ng-click="controller.addCat()"> Add</button>
+
+            <select class="form-control"
+                    ng-model="controller.selectedCat2"
+                    ng-options="controller.catById(x) for x in controller.allCats">
+            </select>
+        </div>
+
+        <!--Text-->
         <div class="form-group">
             <label for="text">Text:</label> <textarea rows="20" type="text" required
                                                       class="form-control" id="text" name="text"

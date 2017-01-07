@@ -1,6 +1,8 @@
 package agrechnev.dto;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by Oleksiy Grechnyev on 12/29/2016.
@@ -21,6 +23,9 @@ public class PostDto implements Dto {
     int rating; // Post rating, normally starts from 0
 
     Long userId; // Corresponds to PostEntity.user
+
+    // Categories (represented by id)
+    Set<Long> categories = new HashSet<>();
 
     // Extra data: userd on read operation only
 
@@ -95,6 +100,14 @@ public class PostDto implements Dto {
 
     public void setUserId(Long userId) {
         this.userId = userId;
+    }
+
+    public Set<Long> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(Set<Long> categories) {
+        this.categories = categories;
     }
 
     public String getUserLogin() {

@@ -3,8 +3,15 @@
     <h3>{{controller.post.title}} </h3>
     <h5>{{controller.post.userLogin}} {{controller.timeToString(controller.post.timeStamp)}} </h5>
 
+
     <!--Normal text viewer: text + optional 2 buttons-->
     <div ng-show="!controller.editingPost">
+        <div class="text-warning">
+        <span ng-repeat="x in controller.catAsList(controller.post)">
+            {{x}} &nbsp; &nbsp; &nbsp;
+        </span>
+        </div>
+
         <div class="panel panel-default">
             <div class="panel-body">{{controller.post.text}}</div>
         </div>
@@ -16,8 +23,32 @@
                 ng-click="controller.delete()">Delete
         </button>
     </div>
-    <!--Text editing form-->
+
+    <!--Post editing form (Categories and Text)-->
     <form role="form" ng-submit="controller.update()" ng-show="controller.editingPost">
+        <div class="form-group">
+            <label for="cats">Categories:</label>
+
+            <select class="form-control" id="cats" name="cats" size="5"
+                    ng-model="controller.selectedCat1"
+                    ng-options="controller.catById(x) for x in controller.updatedCats">
+            </select>
+        </div>
+        <div class="form-inline">
+            <button type="button" class="btn btn-primary" ng-click="controller.deleteCat()"> Delete</button>
+
+            <button type="button" class="btn btn-primary" ng-click="controller.addCat()"> Add</button>
+
+            <select class="form-control"
+                    ng-model="controller.selectedCat2"
+                    ng-options="controller.catById(x) for x in controller.allCats">
+            </select>
+        </div>
+
+        <!--{{controller.selectedCat1}} {{controller.selectedCat2}}-->
+        <!--<br />-->
+        <!--{{controller.updatedCats}}-->
+
         <div class="form-group">
             <label for="text">Text:</label> <textarea rows="15" type="text" required
                                                       class="form-control" id="text" name="text"

@@ -60,12 +60,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.DELETE, "/rest/post/*").authenticated()  //  Delete post
                 .antMatchers(HttpMethod.PUT, "/rest/post/*").authenticated()  //  Update post
 
+                // Categories
+                .antMatchers(HttpMethod.GET, "/rest/category").permitAll()  //  Get all categories
+
                 // Sample DB
                 .antMatchers(HttpMethod.POST, "/rest/sample/create").hasRole("ADMIN")  // Create Sample DB
                 .antMatchers(HttpMethod.POST, "/rest/sample/delete").hasRole("ADMIN")  // Delete everything
-
-                //TODO: Delete later!
-                .antMatchers(HttpMethod.GET, "/rest/resource").authenticated() // Delete later!
 
                 // This door is locked ! Level 20 door needs lvl. 5 Pick Locks skill
                 .anyRequest().denyAll()

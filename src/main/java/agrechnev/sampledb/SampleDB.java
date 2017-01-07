@@ -62,6 +62,10 @@ public class SampleDB {
         categoryEntityRepository.save(catCSharp);
         CategoryEntity catCPP = new CategoryEntity("c++");
         categoryEntityRepository.save(catCPP);
+        CategoryEntity catJavascript = new CategoryEntity("javascript");
+        categoryEntityRepository.save(catJavascript);
+        CategoryEntity catJavascriptAngular = new CategoryEntity("javascript-angular");
+        categoryEntityRepository.save(catJavascriptAngular);
 
         // Let's create some users, uses passwordEncoder
         UserEntity userBrianna = new UserEntity("brianna", passwordEncoder.encode("brianna"),
@@ -85,9 +89,12 @@ public class SampleDB {
 
         // Let's create some posts
         PostEntity post1 = new PostEntity("$http.delete() with a body in Angular JS",
-                "Why cannot I make a $http.delete() request with a body, like" +
+                "Why cannot I make a $http.delete() request with a body, like " +
                         "in the post() request?", LocalDateTime.now(), 0);
         post1.setUser(userBrianna);
+        post1.getCategories().add(catJavascript);
+        post1.getCategories().add(catJavascriptAngular);
+
         postEntityRepository.save(post1);
     }
 

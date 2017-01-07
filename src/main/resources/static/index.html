@@ -25,6 +25,7 @@
         <!--Pages for everyone-->
         <li ng-class="{active : navy.isActive('/')}"><a href="#!/">Home</a></li>
         <li ng-class="{active : navy.isActive('/search')}"><a href="#!/search">Search</a></li>
+        <li ng-class="{active : navy.isActive('/categories')}"><a href="#!/categories">Categories</a></li>
 
         <li ng-show="!isAuthenticated" ng-class="{active : navy.isActive('/login')}"><a href="#!/login">Log In</a></li>
         <!--Pages for registered users-->
@@ -54,10 +55,13 @@
 
 <!--Services-->
 <script src="js/auth.js"></script>
+<script src="js/categ.js"></script>
 
 <!--Controllers-->
 <script src="js/home.js"></script>
 <script src="js/search.js"></script>
+<script src="js/categories.js"></script>
+
 <script src="js/newpost.js"></script>
 <script src="js/myaccount.js"></script>
 <script src="js/login.js"></script>

@@ -2,8 +2,10 @@ package agrechnev.service;
 
 import agrechnev.dto.PostDto;
 import agrechnev.helpers.Util;
+import agrechnev.model.CategoryEntity;
 import agrechnev.model.PostEntity;
 import agrechnev.model.UserEntity;
+import agrechnev.repo.CategoryEntityRepository;
 import agrechnev.repo.PostEntityRepository;
 import agrechnev.repo.UserEntityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,12 +18,15 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class PostService extends AbstractService<PostDto, PostEntity> {
     private UserEntityRepository userEntityRepository;
+    private CategoryEntityRepository categoryEntityRepository;
 
-    // Constructor, needs user repo also
+    // Constructor, needs user and category repos also
     @Autowired
-    public PostService(PostEntityRepository postEntityRepository, UserEntityRepository userEntityRepository) {
+    public PostService(PostEntityRepository postEntityRepository, UserEntityRepository userEntityRepository,
+                       CategoryEntityRepository categoryEntityRepository) {
         this.entityRepo = postEntityRepository;
         this.userEntityRepository = userEntityRepository;
+        this.categoryEntityRepository = categoryEntityRepository;
     }
 
     /**
@@ -48,6 +53,7 @@ public class PostService extends AbstractService<PostDto, PostEntity> {
      * @return
      */
     @Override
+    @Transactional
     protected PostEntity Dto2Entity(PostDto dto) {
         // Create entity
         PostEntity entity = new PostEntity(dto.getTitle(), dto.getText(), dto.getTimeStamp(), dto.getRating());
@@ -57,6 +63,11 @@ public class PostService extends AbstractService<PostDto, PostEntity> {
 
         // Set link to the user
         entity.setUser(userEntityRepository.getOne(dto.getUserId()));
+
+        // Set categories
+        for (Long id : dto.getCategories()) {
+            entity.getCategories().add(categoryEntityRepository.getOne(id));
+        }
 
         return entity;
     }
@@ -79,6 +90,11 @@ public class PostService extends AbstractService<PostDto, PostEntity> {
         UserEntity user = entity.getUser();
         dto.setUserId(user.getId());
 
+        // Categories: object -> id
+        for (CategoryEntity c : entity.getCategories()) {
+            dto.getCategories().add(c.getId());
+        }
+
         // Set user login
         dto.setUserLogin(user.getLogin());
 
@@ -92,10 +108,17 @@ public class PostService extends AbstractService<PostDto, PostEntity> {
      * @param dto
      */
     @Override
+    @Transactional
     protected void updateEntity(PostEntity entity, PostDto dto) {
         entity.setTitle(dto.getTitle());
         entity.setText(dto.getText());
         entity.setTimeStamp(dto.getTimeStamp());
         entity.setRating(dto.getRating());
+
+        // Set categories
+        entity.getCategories().clear();
+        for (Long id : dto.getCategories()) {
+            entity.getCategories().add(categoryEntityRepository.getOne(id));
+        }
     }
 }
