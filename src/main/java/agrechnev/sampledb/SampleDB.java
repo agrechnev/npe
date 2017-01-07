@@ -37,11 +37,13 @@ public class SampleDB {
     @Autowired
     private PasswordEncoder passwordEncoder; // The password encoder
 
+    /**
+     * Create sample database
+     */
+
     @Transactional
     public void createSampleDB() {
-        // Delete everything first
-        userEntityRepository.deleteAllInBatch();
-        categoryEntityRepository.deleteAllInBatch();
+        deleteEverything();
 
         // Let's create categories
         CategoryEntity catJava = new CategoryEntity("java");
@@ -70,14 +72,37 @@ public class SampleDB {
         userBrianna.getMyCategories().add(catCPP);
         userBrianna.getMyCategories().add(catCSharp);
 
-        UserEntity userAdmin = new UserEntity("admin", passwordEncoder.encode("admin"),
-                "Site administrator", "webmaster@npe.com", 10, UserRole.ADMIN);
-        userEntityRepository.save(userAdmin);
+        UserEntity userSeymour = new UserEntity("seymour", passwordEncoder.encode("seymour"),
+                "Seymour Guado", "seymour@yahoo.com", 108, UserRole.USER);
+        userEntityRepository.save(userSeymour);
+
+        userSeymour.getMyCategories().add(catJava);
+        userSeymour.getMyCategories().add(catJavaHibernate);
+        userSeymour.getMyCategories().add(catJavaSpring);
+        userSeymour.getMyCategories().add(catJavaSpringAOP);
+        userSeymour.getMyCategories().add(catJavaSpringBoot);
+
 
         // Let's create some posts
         PostEntity post1 = new PostEntity("$http.delete() with a body in Angular JS",
-                "Why cannot I ...", LocalDateTime.now(), 0);
+                "Why cannot I make a $http.delete() request with a body, like" +
+                        "in the post() request?", LocalDateTime.now(), 0);
         post1.setUser(userBrianna);
         postEntityRepository.save(post1);
+    }
+
+    /**
+     * Delete everything and create admin:admin
+     */
+    public void deleteEverything() {
+        // Delete everything first
+        postEntityRepository.deleteAllInBatch();
+        userEntityRepository.deleteAllInBatch();
+        categoryEntityRepository.deleteAllInBatch();
+
+        // Create the admin account
+        UserEntity userAdmin = new UserEntity("admin", passwordEncoder.encode("admin"),
+                "Site administrator", "webmaster@npe.com", 10, UserRole.ADMIN);
+        userEntityRepository.save(userAdmin);
     }
 }

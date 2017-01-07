@@ -7,7 +7,7 @@
     <div class="alert alert-danger" ng-show="controller.newPostMessage">
         {{controller.newPostMessage}}
     </div>
-    <!--Account details form-->
+    <!--New Post Form-->
     <form role="form" ng-submit="controller.create()">
         <div class="form-group">
             <label for="title">Title:</label> <input type="text" required
@@ -19,7 +19,7 @@
                                                       class="form-control" id="text" name="text"
                                                       ng-model="controller.newPost.text"></textarea>
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-success">Submit</button>
 
     </form>
 

@@ -41,6 +41,10 @@ public class ExtraAuthService {
      * @return
      */
     public Long getId(Principal principal) {
+        if (principal == null) {
+            return null;
+        }
+
         UserDto userDto = userService.findByLogin(principal.getName());
         return (userDto == null) ? null : userDto.getId();
     }
@@ -52,6 +56,10 @@ public class ExtraAuthService {
      * @return
      */
     public boolean isAdmin(Principal principal) {
+        if (principal == null) {
+            return false;
+        }
+
         UserDto userDto = userService.findByLogin(principal.getName());
         return (userDto == null) ? false : (userDto.getRole() == UserRole.ADMIN);
     }

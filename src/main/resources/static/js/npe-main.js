@@ -13,11 +13,6 @@ app.config(function ($routeProvider, $httpProvider) {
             controller: 'home',
             controllerAs: 'controller'
         })
-        .when("/users", {
-            templateUrl: "users.html",
-            controller: 'users',
-            controllerAs: 'controller'
-        })
         .when("/search", {
             templateUrl: "search.html",
             controller: 'search',
@@ -36,6 +31,17 @@ app.config(function ($routeProvider, $httpProvider) {
         .when("/login", {
             templateUrl: "login.html",
             controller: 'login',
+            controllerAs: 'controller'
+        })
+        // Admin pages
+        .when("/admsample", {
+            templateUrl: "admin/admsample.html",
+            controller: 'admsample',
+            controllerAs: 'controller'
+        })
+        .when("/admusers", {
+            templateUrl: "admin/admusers.html",
+            controller: 'admusers',
             controllerAs: 'controller'
         })
         // Special pages, not in the menu
@@ -66,6 +72,7 @@ app.controller('navigation', function ($scope, $http, $location, $rootScope, $ro
     self.logout = function () {
         $http.post('/logout', {}).finally(function () {
             $rootScope.isAuthenticated = false;
+            $rootScope.isAdmin = false;
             $location.path("/"); // Go to the main page
             $route.reload();
         });

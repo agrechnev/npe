@@ -1,14 +1,56 @@
 NullPointerException (NPE) : a programming forum
 
+By Oleksiy Grechnyev, Dec 2016- Jan 2017
+
 development in progress
 
-Includes a simple AngularJS front end (directory /src/main/resources/static)
+A gradle project. Requires JDK 8 and an external database server (preferably MySQL or MariaDB). With default settings it runs an embedded Tomcat web server on localhost:8080
+
+How to Run?
+
+1. Download:
+
+git clone https://github.com/agrechnev/npe.git
+cd npe
+
+2. Edit file "src/main/resources/application.properties":
+
+Set up the database settings (at least login+password) in the file "application.properties". If you want to use something different from MySQL or MariaDB, change "build.gradle" as well to include the proper JDBC driver for your database.
+
+3. Build and run. In the project root directory (npe) type:
+
+gradlew build
+gradlew bootRun
+
+Note that a fat JAR named npe-<version>.jar is created in the build/libs directory. It can be run with
+
+java -jar build/libs/npe-<version>.jar
+
+Note how Spring Boot plugin creates a fat jar with main class specified automatically. Cool!
+
+4. Open localhost:8080 in your browser. It is better to use a Private(Anonymous) browser window. Enjoy!
+
+For a quick start, log in with admin:admin (in works with an empty database), then create a sample database.
+All users in the sample DB have their login names as passwords, e.g. admin:admin, brianna:brianna.
+
+---------
+More info:
+
+This is a Rest Resource Server written on Java+Spring Boot+Hibernate.
+
+Front End: A simple single-page AngularJS front end (directory src/main/resources/static)
+
+Unit Tests: Contains unit tests for classes UserController.
+
+This is a demonstration of unit testing with Spring Boot and Spring Security. Uses Mockito+Hamcrest, of course.
 
 Spring Security: I opted to use a simple password-based approach, outlined here
 
 https://spring.io/guides/tutorials/spring-security-and-angular-js/
 
 I didn't use oauth because I wanted to learn simpler things first. For the same reason: no hateoas in my rest.
+
+Logging: Uses log file npe.log by default.
 
 ------------------
 Rest API:
@@ -35,3 +77,8 @@ Posts:
 GET("/rest/post") =  Get all posts as a list of PostDto (open)
 POST("/rest/post", PostDto postDto) =  Create a new post (current user)
 GET("/rest/post/{id}") =  Get a post (PostDto) by id (open)
+
+Sample DB:
+
+POST("/rest/sample/create", String passw) = Create sample database (Admin Only)
+POST("/rest/sample/delete", String passw) = Delete everything (Admin Only)

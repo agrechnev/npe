@@ -1,5 +1,5 @@
 // Controller for the view users.html
-app.controller('users', function ($scope, $http) {
+app.controller('admusers', function ($scope, $http) {
     var self = this;
 
     $http.get('/rest/user').then(function (response) {

@@ -1,0 +1,44 @@
+<div class="container">
+
+    <h2> Create Sample Database or Delete Everything: </h2>
+
+    <p class="text-danger">
+        Warning: these operations delete
+        <mark> everything</mark>
+        in your database, your admin
+        account included!
+    </p>
+
+    <p>
+        Both operation create a single admin account <code>admin</code> with password <code>admin</code>.
+        Afterwards, you will be automatically logged in as the new <code>admin</code>. Change the password ASAP!
+    </p>
+
+    <div class="alert alert-danger" ng-show="controller.errorMessage">
+        {{controller.errorMessage}}
+    </div>
+
+    <form role="form" name="dangerform">
+        <div class="form-group">
+            <label for="passw">Confirm with password:</label> <input type="password" required
+                                                                     class="form-control" id="passw" name="passw"
+                                                                     ng-model="controller.passw"/>
+
+        </div>
+        <button type="button" class="btn btn-danger"
+                ng-click="controller.submit('/rest/sample/create')">
+            Create Sample DB
+        </button>
+
+        <button type="button" class="btn btn-danger"
+                ng-click="controller.submit('/rest/sample/delete')">
+            Delete Everything
+        </button>
+    </form>
+
+
+    <p>
+        Note: These operations do not reset database IDs. Delete the database on the SQL server for ID reset.
+    </p>
+
+</div>

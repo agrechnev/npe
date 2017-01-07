@@ -79,6 +79,7 @@ app.controller('myaccount', function ($scope, $http, $rootScope, $location, auth
             // Changed successfully, logging out, then in again
             $http.post('/logout', {}).finally(function () {
                 $rootScope.isAuthenticated = false;
+                $rootScope.isAdmin = false;
 
                 // Logging in again
                 auth.authenticate(credentials, function () {

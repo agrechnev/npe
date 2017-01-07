@@ -36,6 +36,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
                 // Static HTML+AngularJS pages
                 .antMatchers("/*.html", "/", "/ajs/*.js").permitAll()
+                .antMatchers("/admin/*.html").hasRole("ADMIN")
 
                 // Login and logout API (AuthController)
                 .antMatchers(HttpMethod.GET, "/userauth").authenticated() // Get current user principal
@@ -58,6 +59,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/rest/post/*").permitAll()  //  Get one post
                 .antMatchers(HttpMethod.DELETE, "/rest/post/*").authenticated()  //  Delete post
                 .antMatchers(HttpMethod.PUT, "/rest/post/*").authenticated()  //  Update post
+
+                // Sample DB
+                .antMatchers(HttpMethod.POST, "/rest/sample/create").hasRole("ADMIN")  // Create Sample DB
+                .antMatchers(HttpMethod.POST, "/rest/sample/delete").hasRole("ADMIN")  // Delete everything
 
                 //TODO: Delete later!
                 .antMatchers(HttpMethod.GET, "/rest/resource").authenticated() // Delete later!
