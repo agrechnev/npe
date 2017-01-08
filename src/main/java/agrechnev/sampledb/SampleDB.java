@@ -96,7 +96,7 @@ public class SampleDB {
         post1.getCategories().add(catJavascript);
         post1.getCategories().add(catJavascriptAngular);
 
-        CommentEntity comment = new CommentEntity("If you really want $http.delete() with a body," +
+        CommentEntity comment = new CommentEntity("If you really want $http.delete() with a body, " +
                 "do it like this \n" +
                 " $http({\n" +
                 "        url: 'domain/resource',\n" +

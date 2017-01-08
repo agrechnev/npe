@@ -3,6 +3,8 @@ package agrechnev.service;
 import agrechnev.dto.CommentDto;
 import agrechnev.helpers.Util;
 import agrechnev.model.CommentEntity;
+import agrechnev.model.PostEntity;
+import agrechnev.model.UserEntity;
 import agrechnev.repo.CommentEntityRepository;
 import agrechnev.repo.PostEntityRepository;
 import agrechnev.repo.UserEntityRepository;
@@ -87,10 +89,17 @@ public class CommentService extends AbstractService<CommentDto, CommentEntity> {
         dto.setId(entity.getId());
 
         // Set user
-        dto.setUserId(entity.getUser().getId());
+        UserEntity user = entity.getUser();
+        dto.setUserId(user.getId());
+        dto.setUserLogin(user.getLogin());
+
 
         // Set post
-        dto.setPostId(entity.getPost().getId());
+        PostEntity post = entity.getPost();
+        dto.setPostId(post.getId());
+
+        // Set post owner id
+        dto.setPostOwnerId(post.getUser().getId());
 
         return dto;
     }

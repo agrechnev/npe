@@ -112,6 +112,7 @@ public abstract class AbstractService<D extends Dto, E extends EntityWithId> {
     @Transactional
     public D get(Long id) {
         E entity = entityRepo.findOne(id);
+
         return entity == null ? null : Entity2Dto(entity);
     }
 

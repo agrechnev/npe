@@ -12,9 +12,7 @@
         </span>
         </div>
 
-        <div class="panel panel-default">
-            <div class="panel-body lead">{{controller.post.text}}</div>
-        </div>
+        <pre class="lead">{{controller.post.text}}</pre>
         <button class="btn btn-primary" ng-show="controller.post.editable"
                 ng-click="controller.edit()">Edit
         </button>
@@ -63,9 +61,47 @@
     <div ng-repeat="com in controller.comments">
         <!--Header: comment author and timestamp-->
         <h5>{{com.userLogin}} {{controller.timeToString(com.timeStamp)}} </h5>
-        <!--Comment body (text)-->
-        <div class="panel panel-default">
-            <div class="panel-body lead">{{com.text}}</div>
+
+        <!--Normal (non-editing version)-->
+        <div ng-show="com.id != controller.editingComment">
+            <!--Comment body (text)-->
+            <pre>{{com.text}}</pre>
+
+            <!--Edit and delete buttons-->
+            <button type="button" class="btn btn-primary" ng-show="com.editable"
+                    ng-click="controller.editComment(com.id)">
+                Edit
+            </button>
+
+            <button type="button" class="btn btn-primary" ng-show="com.deletable"
+                    ng-click="controller.deleteComment(com.id)">
+                Delete
+            </button>
         </div>
+        <!--Editing version-->
+
+        <form role="form" ng-submit="controller.updateComment()" ng-show="com.id == controller.editingComment">
+            <div class="form-group">
+                <label for="ecText">Editing Comment </label>
+                <textarea rows="10" type="text" required
+                          class="form-control" id="ecText" name="ecText"
+                          ng-model="controller.editCommentText"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Apply</button>
+            <button type="button" class="btn btn-primary" ng-click="controller.cancel()">Cancel</button>
+        </form>
+
     </div>
+
+    <!--Add comment-->
+
+    <form role="form" ng-submit="controller.addComment()" ng-show="isAuthenticated">
+        <div class="form-group">
+            <label for="ncText">New Comment </label>
+            <textarea rows="10" type="text" required
+                      class="form-control" id="ncText" name="ncText"
+                      ng-model="controller.newCommentText"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Add</button>
+    </form>
 </div>

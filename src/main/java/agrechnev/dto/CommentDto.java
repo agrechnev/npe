@@ -22,6 +22,19 @@ public class CommentDto implements Dto {
 
     private Long postId; // Corresponds to CommentEntity.post
 
+    //-------------- Extra fields -----------------
+    private String userLogin; // The user login corresponding to userId
+
+    // User id of the post owner
+    private Long postOwnerId;
+
+    // The current user is allowed to edit the comment (owner only)
+    private boolean editable;
+
+    // The current user is allowed to delete the comment
+    // (comment owner, post owner or admin)
+    private boolean deletable;
+
     //-------------- Constructors ------------------
     public CommentDto() {
     }
@@ -82,6 +95,38 @@ public class CommentDto implements Dto {
 
     public void setPostId(Long postId) {
         this.postId = postId;
+    }
+
+    public String getUserLogin() {
+        return userLogin;
+    }
+
+    public void setUserLogin(String userLogin) {
+        this.userLogin = userLogin;
+    }
+
+    public boolean isEditable() {
+        return editable;
+    }
+
+    public void setEditable(boolean editable) {
+        this.editable = editable;
+    }
+
+    public boolean isDeletable() {
+        return deletable;
+    }
+
+    public void setDeletable(boolean deletable) {
+        this.deletable = deletable;
+    }
+
+    public Long getPostOwnerId() {
+        return postOwnerId;
+    }
+
+    public void setPostOwnerId(Long postOwnerId) {
+        this.postOwnerId = postOwnerId;
     }
 
     //--------------- toString-----------------------

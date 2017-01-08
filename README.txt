@@ -77,10 +77,16 @@ Posts:
 GET("/rest/post") =  Get all posts as a list of PostDto (open)
 POST("/rest/post", PostDto postDto) =  Create a new post (current user)
 GET("/rest/post/{id}") =  Get a post (PostDto) by id (open)
+DELETE("/rest/post/{id}") =  Delete a post (post owner or admin)
+PUT("/rest/post/{id}") =  Update a post (post owner)
 
 Comments:
 
-
+GET("/rest/post/{postId}/comment") =  Get all comments as a list of CommentDto (open)
+POST("/rest/post/{postId}/comment", CommentDto commentDto) =  Create a new comment (current user)
+GET("/rest/post/{postId}/comment/{id}") =  Get a comment (CommentDto) by id (open)
+DELETE("/rest/post/{postId}/comment/{id}") = Delete a comment (admin, post owner, comment owner)
+PUT("/rest/post/{postId}/comment/{id}") = Update a comment (comment owner)
 
 Categories:
 

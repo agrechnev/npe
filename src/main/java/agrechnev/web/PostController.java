@@ -61,7 +61,7 @@ public class PostController {
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<?> create(@RequestBody PostDto postDto, Principal principal) {
         logger.info("Creating new post :" + postDto.getTitle());
-        logger.info("by user : " + postDto.getUserId());
+
 
         // Set the timestamp
         postDto.setTimeStamp(LocalDateTime.now());
@@ -71,6 +71,7 @@ public class PostController {
         if (userId == null) return status(HttpStatus.UNAUTHORIZED).body(null);
 
         postDto.setUserId(userId);
+        logger.info("by user : " + userId);
 
         Long id = postService.create(postDto);
 
@@ -125,6 +126,8 @@ public class PostController {
         // Check if admin or owner
         if (extraAuthService.isAdmin(principal) || postDto.getUserId().equals(extraAuthService.getId(principal))) {
             postService.delete(postId);
+            logger.info("Delete successful");
+
             return ResponseEntity.ok(null);
         } else {
             return status(HttpStatus.UNAUTHORIZED).body(null);
@@ -156,6 +159,9 @@ public class PostController {
             oldDto.setCategories(updator.getCategories());
 
             postService.update(oldDto);
+
+            logger.info("Update successful");
+
             return ResponseEntity.ok(null);
         } else {
             return status(HttpStatus.UNAUTHORIZED).body(null);

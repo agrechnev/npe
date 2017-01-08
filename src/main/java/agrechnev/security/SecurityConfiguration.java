@@ -63,6 +63,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 // Comments
                 .antMatchers(HttpMethod.GET, "/rest/post/*/comment").permitAll()  //  Get all comments
                 .antMatchers(HttpMethod.GET, "/rest/post/*/comment/*").permitAll()  //  Get one comment
+                .antMatchers(HttpMethod.POST, "/rest/post/*/comment").authenticated()  // New comment
+                .antMatchers(HttpMethod.DELETE, "/rest/post/*/comment/*").authenticated()  //  Delete comment
+                .antMatchers(HttpMethod.PUT, "/rest/post/*/comment/*").authenticated()  //  Update comment
+
 
                 // Categories
                 .antMatchers(HttpMethod.GET, "/rest/category").permitAll()  //  Get all categories

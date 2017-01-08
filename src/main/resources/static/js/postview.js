@@ -3,7 +3,9 @@ app.controller('postview', function ($scope, $http, $routeParams, $location, $ro
     var self = this;
 
     self.editingPost = false; // True if you're editing the text
-
+    self.editingComment = 0; // Dummy id, not editing any comments
+    self.newCommentText = "";
+    self.editCommentText = "";
 
     // Load categories using service categ
     categ.load();
@@ -83,8 +85,10 @@ app.controller('postview', function ($scope, $http, $routeParams, $location, $ro
 
     // Cancel editing
     self.cancel = function () {
+        self.editingComment = 0;
         self.editingPost = false;
         self.updatedText = "";
+        self.editCommentText = "";
         self.updatedCats = [];
     }
 
@@ -118,5 +122,71 @@ app.controller('postview', function ($scope, $http, $routeParams, $location, $ro
         }
     }
 
+    //--------------------- Comment functions --------------------
+    // Add a commnet
+    self.addComment = function () {
+        var commentDto = {};
 
+        commentDto.text = self.newCommentText;
+        commentDto.rating = 0;
+
+        // Try to POST the new object
+        var url = "/rest/post/" + $routeParams.id + "/comment";
+
+        $http.post(url, commentDto).then(
+            function success(response) {
+                $route.reload();
+            },
+            function failure(response) {
+            }
+        );
+    }
+
+    // Delete comment id
+    self.deleteComment = function (id) {
+        // Try to DELETE
+        var url = "/rest/post/" + $routeParams.id + "/comment/" + id;
+
+        $http.delete(url).then(
+            function success(response) {
+                $route.reload();
+            },
+            function failure(response) {
+            }
+        );
+    }
+
+    // Edit comment id
+    self.editComment = function (id) {
+        self.editingComment = id;
+
+        // Set up the text
+        self.comments.forEach(function (x) {
+            if (x.id == id) self.editCommentText = x.text;
+        });
+
+    }
+
+    // Update  a comment with id = self.editingComment
+    self.updateComment = function () {
+        // Try to PUT
+        var url = "/rest/post/" + $routeParams.id + "/comment/" + self.editingComment;
+
+        // Create an updator
+        var updator = {};
+        updator.id = self.editingComment
+        updator.text = self.editCommentText;
+
+        // Clean up the mess
+        self.editingComment = 0;
+        self.editCommentText = "";
+
+        $http.put(url, updator).then(
+            function success(response) {
+                $route.reload();
+            },
+            function failure(response) {
+            }
+        );
+    }
 });
