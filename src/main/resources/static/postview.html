@@ -13,7 +13,7 @@
         </div>
 
         <div class="panel panel-default">
-            <div class="panel-body">{{controller.post.text}}</div>
+            <div class="panel-body lead">{{controller.post.text}}</div>
         </div>
         <button class="btn btn-primary" ng-show="controller.post.editable"
                 ng-click="controller.edit()">Edit
@@ -58,4 +58,14 @@
         <button type="cancel" class="btn btn-primary" ng-click="controller.cancel()">Cancel</button>
 
     </form>
+
+    <!--Comments-->
+    <div ng-repeat="com in controller.comments">
+        <!--Header: comment author and timestamp-->
+        <h5>{{com.userLogin}} {{controller.timeToString(com.timeStamp)}} </h5>
+        <!--Comment body (text)-->
+        <div class="panel panel-default">
+            <div class="panel-body lead">{{com.text}}</div>
+        </div>
+    </div>
 </div>

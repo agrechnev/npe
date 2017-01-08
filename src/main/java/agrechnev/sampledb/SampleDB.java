@@ -1,10 +1,8 @@
 package agrechnev.sampledb;
 
-import agrechnev.model.CategoryEntity;
-import agrechnev.model.PostEntity;
-import agrechnev.model.UserEntity;
-import agrechnev.model.UserRole;
+import agrechnev.model.*;
 import agrechnev.repo.CategoryEntityRepository;
+import agrechnev.repo.CommentEntityRepository;
 import agrechnev.repo.PostEntityRepository;
 import agrechnev.repo.UserEntityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +31,9 @@ public class SampleDB {
 
     @Autowired
     PostEntityRepository postEntityRepository;
+
+    @Autowired
+    CommentEntityRepository commentEntityRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder; // The password encoder
@@ -95,7 +96,27 @@ public class SampleDB {
         post1.getCategories().add(catJavascript);
         post1.getCategories().add(catJavascriptAngular);
 
+        CommentEntity comment = new CommentEntity("If you really want $http.delete() with a body," +
+                "do it like this \n" +
+                " $http({\n" +
+                "        url: 'domain/resource',\n" +
+                "        method: 'DELETE',\n" +
+                "        data: {\n" +
+                "            id: object.id\n" +
+                "        },\n" +
+                "        headers: {\n" +
+                "            \"Content-Type\": \"application/json;charset=utf-8\"\n" +
+                "        }\n" +
+                "    }).then(function(res) {\n" +
+                "        console.log(res.data);\n" +
+                "    }, function(error) {\n" +
+                "        console.log(error);\n" +
+                "    });", LocalDateTime.now(), 0);
+
         postEntityRepository.save(post1);
+        comment.setUser(userSeymour);
+        comment.setPost(post1);
+        commentEntityRepository.save(comment);
     }
 
     /**
@@ -103,6 +124,7 @@ public class SampleDB {
      */
     public void deleteEverything() {
         // Delete everything first
+        commentEntityRepository.deleteAllInBatch();
         postEntityRepository.deleteAllInBatch();
         userEntityRepository.deleteAllInBatch();
         categoryEntityRepository.deleteAllInBatch();

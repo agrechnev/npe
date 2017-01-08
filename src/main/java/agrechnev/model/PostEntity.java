@@ -4,7 +4,9 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -20,26 +22,29 @@ public class PostEntity implements EntityWithId {
 
     //------------- Proper fields -----------------
     @Column(nullable = false)
-    String title; // Post title
+    private String title; // Post title
 
     @Column(nullable = false)
     @Type(type = "text")
-    String text;  // Post text
+    private String text;  // Post text
 
     @Column(nullable = false)
-    LocalDateTime timeStamp;
+    private LocalDateTime timeStamp;
 
-    int rating; // Post rating, normally starts from 0
+    private int rating; // Post rating, normally starts from 0
 
+    //-------------- Links -----------------
     // Categories of this post
     @ManyToMany
     private Set<CategoryEntity> categories = new HashSet<>();
 
-    //-------------- Links -----------------
+    // Post owner+author
     @ManyToOne
-    UserEntity user;
+    private UserEntity user;
 
-    // TODO: add comments here
+    // Comments
+    @OneToMany
+    private List<CommentEntity> comments = new ArrayList<>();
 
     //-------------- Constructors -----------
 
@@ -110,6 +115,14 @@ public class PostEntity implements EntityWithId {
 
     public void setCategories(Set<CategoryEntity> categories) {
         this.categories = categories;
+    }
+
+    public List<CommentEntity> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<CommentEntity> comments) {
+        this.comments = comments;
     }
 
     //--------------- toString-----------------------

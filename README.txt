@@ -30,7 +30,7 @@ Note how Spring Boot plugin creates a fat jar with main class specified automati
 
 4. Open localhost:8080 in your browser. It is better to use a Private(Anonymous) browser window. Enjoy!
 
-For a quick start, log in with admin:admin (in works with an empty database), then create a sample database.
+For a quick start, log in with admin:admin (it works with an empty database), then create a sample database (Sample DB).
 All users in the sample DB have their login names as passwords, e.g. admin:admin, brianna:brianna.
 
 ---------
@@ -77,6 +77,10 @@ Posts:
 GET("/rest/post") =  Get all posts as a list of PostDto (open)
 POST("/rest/post", PostDto postDto) =  Create a new post (current user)
 GET("/rest/post/{id}") =  Get a post (PostDto) by id (open)
+
+Comments:
+
+
 
 Categories:
 

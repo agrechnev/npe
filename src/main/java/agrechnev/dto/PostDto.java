@@ -14,26 +14,26 @@ public class PostDto implements Dto {
 
     //------------- Proper fields -----------------
 
-    String title; // Post title
+    private String title; // Post title
 
-    String text;  // Post text
+    private String text;  // Post text
 
-    LocalDateTime timeStamp;
+    private LocalDateTime timeStamp;
 
-    int rating; // Post rating, normally starts from 0
+    private int rating; // Post rating, normally starts from 0
 
-    Long userId; // Corresponds to PostEntity.user
+    private Long userId; // Corresponds to PostEntity.user
 
     // Categories (represented by id)
-    Set<Long> categories = new HashSet<>();
+    private Set<Long> categories = new HashSet<>();
 
     // Extra data: userd on read operation only
 
-    String userLogin; // The user login corresponding to userId
+    private String userLogin; // The user login corresponding to userId
 
     // Does this post belong to the user currently logged in ?
     // Set by the Web controller
-    boolean editable;
+    private boolean editable;
 
     //-------------- Constructors ------------------
 

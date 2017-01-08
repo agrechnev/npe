@@ -7,6 +7,8 @@ import agrechnev.service.exception.InvalidDtoUpdateException;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -134,6 +136,24 @@ public abstract class AbstractService<D extends Dto, E extends EntityWithId> {
      */
     public boolean exists(Long id) {
         return entityRepo.exists(id);
+    }
+
+    /**
+     * Transform a collection of entities into a Dto list
+     *
+     * @param entities
+     * @return
+     */
+    public List<D> EntityList2DtoList(Collection<E> entities) {
+        if (entities == null) entities = new ArrayList<>();
+
+        // Convert all entites to dtos
+        List<D> dtos = new ArrayList<>();
+        for (E entity : entities) {
+            dtos.add(Entity2Dto(entity));
+        }
+
+        return dtos;
     }
 
 

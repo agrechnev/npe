@@ -1,5 +1,6 @@
 package agrechnev.web;
 
+import agrechnev.dto.UserDto;
 import agrechnev.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,8 +28,12 @@ public class AuthController {
     // Get current user ID if authenticated
     @RequestMapping(method = RequestMethod.GET, value = "/userid")
     public Long userId(Principal user) {
-        // NullPointerException could happen here, but it would be pathological anyway
-        return userService.findByLogin(user.getName()).getId();
+
+        UserDto userDto = userService.findByLogin(user.getName());
+
+        // Will be null if empty database and admin:admin
+        // To avoid ugly (although harmless) NullPointerException
+        return userDto == null ? 0L : userDto.getId();
     }
 
     // POST /logout should work by itself as POST

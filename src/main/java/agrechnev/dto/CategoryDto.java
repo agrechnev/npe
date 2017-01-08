@@ -41,4 +41,24 @@ public class CategoryDto implements Dto {
     public void setCategoryName(String categoryName) {
         this.categoryName = categoryName;
     }
+
+    //--------------- toString-----------------------
+
+    //--------------- equals + hashCode -------------
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof CategoryDto)) return false;
+
+        CategoryDto dto = (CategoryDto) o;
+
+        return getId() != null ? getId().equals(dto.getId()) : dto.getId() == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        return getId() != null ? getId().hashCode() : 0;
+    }
 }

@@ -115,6 +115,8 @@ public class PostService extends AbstractService<PostDto, PostEntity> {
         entity.setTimeStamp(dto.getTimeStamp());
         entity.setRating(dto.getRating());
 
+        // User id is not allowed to change
+
         // Set categories
         entity.getCategories().clear();
         for (Long id : dto.getCategories()) {

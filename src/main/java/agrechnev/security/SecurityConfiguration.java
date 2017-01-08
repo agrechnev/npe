@@ -60,6 +60,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.DELETE, "/rest/post/*").authenticated()  //  Delete post
                 .antMatchers(HttpMethod.PUT, "/rest/post/*").authenticated()  //  Update post
 
+                // Comments
+                .antMatchers(HttpMethod.GET, "/rest/post/*/comment").permitAll()  //  Get all comments
+                .antMatchers(HttpMethod.GET, "/rest/post/*/comment/*").permitAll()  //  Get one comment
+
                 // Categories
                 .antMatchers(HttpMethod.GET, "/rest/category").permitAll()  //  Get all categories
 

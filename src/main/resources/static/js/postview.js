@@ -14,6 +14,12 @@ app.controller('postview', function ($scope, $http, $routeParams, $location, $ro
         self.post = response.data;
     });
 
+    // Get comments for this post
+
+    $http.get(url + "/comment").then(function (response) {
+        self.comments = response.data;
+    });
+
     //--------------------------------------
     // Misc functions
     // print Java 8 LocalDateTime object as string
@@ -33,7 +39,7 @@ app.controller('postview', function ($scope, $http, $routeParams, $location, $ro
         return categ.byId(id);
     }
 
-    // Get categories of a post as an array of names
+    // Get categories of a post object as an array of names
     self.catAsList = function (post) {
         return categ.asNameList(post);
     }
