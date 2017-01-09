@@ -1,4 +1,5 @@
-// Controller for the view search.html
+// By Oleksiy Grechnyev
+// Controller for the view postview.html
 app.controller('postview', function ($scope, $http, $routeParams, $location, $route, categ) {
     var self = this;
 

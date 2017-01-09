@@ -1,6 +1,6 @@
 // By Oleksiy Grechnyev
 // Controller for the view myaccount.html: Edit or delete my account
-app.controller('myaccount', function ($scope, $http, $rootScope, $location, auth) {
+app.controller('myaccount', function ($scope, $http, $rootScope, $route, $location, auth) {
     var self = this;
 
     self.init = function () {
@@ -25,14 +25,20 @@ app.controller('myaccount', function ($scope, $http, $rootScope, $location, auth
     // Run it at startup
     self.init();
 
+    // Try to update the user
     self.update = function () {
-        // Try to update the user
         $http.put("/rest/user/" + $rootScope.authUserId, self.user).then(function (response) {
             self.updateMessage = "Account updated successfully."
         }, function () {
             self.updateMessage = "Cannot update account."
-        })
+        }).finally(function () {
+            $route.reload();
+        });
+    }
 
+    // Cancel update
+    self.cancel = function () {
+        $route.reload();
     }
 
 

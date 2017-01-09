@@ -1,3 +1,4 @@
+// By Oleksiy Grechnyev
 // Controller for the view search.html
 app.controller('search', function ($scope, $http, categ) {
     var self = this;

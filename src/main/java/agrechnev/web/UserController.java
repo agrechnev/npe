@@ -57,6 +57,10 @@ public class UserController {
         for (UserDto userDto : all) {
             userDto.setPassw("CYBERDEMON");
         }
+
+        // Sort by login
+        all.sort((u1, u2) -> u1.getLogin().compareTo(u2.getLogin()));
+
         return all;
     }
 

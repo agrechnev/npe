@@ -1,3 +1,4 @@
+// By Oleksiy Grechnyev
 // Controller for the view categories.html
 app.controller('categories', function ($scope, $http, $route) {
     var self = this;

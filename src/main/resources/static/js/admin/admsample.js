@@ -1,3 +1,4 @@
+// By Oleksiy Grechnyev
 // Controller for the view users.html
 app.controller('admsample', function ($scope, $http, $route, $rootScope, $location, auth) {
         var self = this;

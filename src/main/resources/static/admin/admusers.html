@@ -1,11 +1,65 @@
+<!--By Oleksiy Grechnyev-->
+
 <div class="container">
 
     <h2> All users: </h2>
     <!--<p>{{controller.allUsers}}</p>-->
 
-    <ul>
-        <li ng-repeat="x in controller.allUsers">
-            {{ x }}
-        </li>
-    </ul>
+    <select size="10" class="form-control" ng-model="controller.selectedUser"
+            ng-options="u.login+' ('+u.fullName+')' for u in controller.userList">
+    </select>
+
+
+    <button type="button" class="btn btn-primary" ng-show="isAdmin"
+            ng-click="controller.editUser(controller.selectedUser.id)">
+        Edit
+    </button>
+    <button type="button" class="btn btn-primary" ng-show="isAdmin"
+            ng-click="controller.deleteUser(controller.selectedUser.id)">
+        Delete
+    </button>
+
+    <!--User editing form-->
+    <h2 ng-show="controller.editingUserId"> Edit user: </h2>
+
+    <form role="form" ng-submit="controller.update()" ng-show="controller.editingUserId">
+        <div class="form-group">
+            <label for="login">Login Name:</label> <input type="text" required
+                                                          class="form-control" id="login" name="login"
+                                                          ng-model="controller.editingUser.login" readonly/>
+        </div>
+        <div class="form-group">
+            <label for="fullName">Full Name:</label> <input type="text" required
+                                                            class="form-control" id="fullName" name="fullName"
+                                                            ng-model="controller.editingUser.fullName"/>
+        </div>
+        <div class="form-group">
+            <label for="email">E-mail:</label> <input type="email" required
+                                                      class="form-control" id="email" name="email"
+                                                      ng-model="controller.editingUser.email"/>
+        </div>
+        <div class="form-group">
+            <label for="points">Points:</label> <input type="number" required
+                                                       class="form-control" id="points" name="email"
+                                                       ng-model="controller.editingUser.points"/>
+        </div>
+        <div class="form-group">
+            <label>Role:</label>
+            <div class="radio">
+                <label><input type="radio" class="radio"
+                              ng-model="controller.editingUser.role" value="USER"/>USER</label>
+            </div>
+            <div class="radio">
+                <label><input type="radio" class="radio"
+                              ng-model="controller.editingUser.role" value="EXPERT"/>EXPERT</label>
+            </div>
+            <div class="radio">
+                <label><input type="radio" class="radio"
+                              ng-model="controller.editingUser.role" value="ADMIN"/>ADMIN</label>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Apply</button>
+        <button type="button" class="btn btn-primary" ng-click="controller.cancel()">Cancel</button>
+
+    </form>
 </div>
