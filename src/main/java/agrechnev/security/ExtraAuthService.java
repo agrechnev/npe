@@ -85,4 +85,26 @@ public class ExtraAuthService {
         UserDto userDto = userService.findByLogin(principal.getName());
         return (userDto == null) ? false : (userDto.getRole() == UserRole.ADMIN);
     }
+
+    /**
+     * Check if the user is expert or admin
+     *
+     * @param principal
+     * @return
+     */
+    public boolean isExpertOrAdmin(Principal principal) {
+
+        // The empty DB case
+        if (userEntityRepository.count() == 0) {
+            return principal.getName().equals("admin");
+        }
+
+        if (principal == null) {
+            return false;
+        }
+
+        UserDto userDto = userService.findByLogin(principal.getName());
+        return (userDto == null) ? false :
+                (userDto.getRole() == UserRole.ADMIN || userDto.getRole() == UserRole.EXPERT);
+    }
 }

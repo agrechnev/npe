@@ -67,9 +67,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.DELETE, "/rest/post/*/comment/*").authenticated()  //  Delete comment
                 .antMatchers(HttpMethod.PUT, "/rest/post/*/comment/*").authenticated()  //  Update comment
 
-
                 // Categories
                 .antMatchers(HttpMethod.GET, "/rest/category").permitAll()  //  Get all categories
+                .antMatchers(HttpMethod.GET, "/rest/category/*").permitAll()  //  Get one category
+                .antMatchers(HttpMethod.POST, "/rest/category").authenticated()  //  Create a category
+                .antMatchers(HttpMethod.DELETE, "/rest/category/*").hasRole("ADMIN")  // Delete a category
+                .antMatchers(HttpMethod.PUT, "/rest/category/*").hasRole("ADMIN")  // Update a category
 
                 // Sample DB
                 .antMatchers(HttpMethod.POST, "/rest/sample/create").hasRole("ADMIN")  // Create Sample DB

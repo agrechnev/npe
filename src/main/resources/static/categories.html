@@ -1,4 +1,50 @@
 <div class="container">
     <h2>Categories:</h2>
-    {{controller.allCategories}}
+    <h4 ng-show="isAdmin" class="text-info">
+        You may edit categories.
+    </h4>
+    <h4 ng-show="isExpert && !isAdmin" class="text-info">
+        You may add categories.
+    </h4>
+    <h4 ng-show="!(isAdmin || isExpert)" class="text-info">
+        Read only. Only expert or admin may edit categories.
+    </h4>
+
+    <div class="panel panel-group" ng-repeat="cat in controller.categories">
+        <!--Normal (non-edit) category view-->
+        <div class="panel panel-default" ng-show="cat.id != controller.editCatId">
+            <div class="panel-body">
+                {{cat.categoryName}}
+                <button type="button" class="btn btn-primary" ng-show="isAdmin"
+                        ng-click="controller.editCat(cat.id)">
+                    Edit
+                </button>
+                <button type="button" class="btn btn-primary" ng-show="isAdmin"
+                        ng-click="controller.deleteCat(cat.id)">
+                    Delete
+                </button>
+            </div>
+        </div>
+        <!--Edit view-->
+        <form role="form" ng-submit="controller.update()" ng-show="cat.id == controller.editCatId">
+            <div class="form-group">
+                <label for="ecatname">New Category (format "java-spring-security") </label>
+                <input type="text" class="form-control" id="ecatname" name="ecatname" required
+                       maxlength="100" ng-model="controller.editCatName"/>
+            </div>
+            <button type="submit" class="btn btn-primary">Apply</button>
+            <button type="button" class="btn btn-primary" ng-click="controller.cancel()">Cancel</button>
+        </form>
+    </div>
+
+    <!--Add category-->
+
+    <form role="form" ng-submit="controller.addCat()" ng-show="isExpert || isAdmin">
+        <div class="form-group">
+            <label for="catname">New Category (format "java-spring-security") </label>
+            <input type="text" class="form-control" id="catname" name="catname" required
+                   maxlength="100" ng-model="controller.newCatName"/>
+        </div>
+        <button type="submit" class="btn btn-primary">Add</button>
+    </form>
 </div>

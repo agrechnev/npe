@@ -69,4 +69,16 @@ public class Util {
         ).collect(Collectors.toList());
     }
 
+    /**
+     * Return substring of s with length len, or s if it's shorter than len
+     * No exceptions
+     *
+     * @param s
+     * @param len
+     * @return
+     */
+    public static String checkLen(String s, int len) {
+        return (s.length() > len) ? s.substring(0, len) : s;
+    }
+
 }

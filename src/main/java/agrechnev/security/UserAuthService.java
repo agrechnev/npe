@@ -55,6 +55,10 @@ public class UserAuthService implements UserDetailsService {
             if (o.get().getRole() == UserRole.ADMIN) {
                 authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
             }
+            // Add expert role if needed
+            if (o.get().getRole() == UserRole.EXPERT) {
+                authorities.add(new SimpleGrantedAuthority("ROLE_EXPERT"));
+            }
             // Authorize
             return new User(username, o.get().getPassw(), authorities);
 

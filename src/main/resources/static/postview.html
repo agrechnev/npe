@@ -48,7 +48,7 @@
         <!--{{controller.updatedCats}}-->
 
         <div class="form-group">
-            <label for="text">Text:</label> <textarea rows="15" type="text" required
+            <label for="text">Text:</label> <textarea rows="15" maxlength="2000" type="text" required
                                                       class="form-control" id="text" name="text"
                                                       ng-model="controller.updatedText"></textarea>
         </div>
@@ -83,7 +83,7 @@
         <form role="form" ng-submit="controller.updateComment()" ng-show="com.id == controller.editingComment">
             <div class="form-group">
                 <label for="ecText">Editing Comment </label>
-                <textarea rows="10" type="text" required
+                <textarea rows="10" maxlength="2000" type="text" required
                           class="form-control" id="ecText" name="ecText"
                           ng-model="controller.editCommentText"></textarea>
             </div>
@@ -98,7 +98,7 @@
     <form role="form" ng-submit="controller.addComment()" ng-show="isAuthenticated">
         <div class="form-group">
             <label for="ncText">New Comment </label>
-            <textarea rows="10" type="text" required
+            <textarea rows="10" maxlength="2000" type="text" required
                       class="form-control" id="ncText" name="ncText"
                       ng-model="controller.newCommentText"></textarea>
         </div>

@@ -44,7 +44,7 @@ Nothing fancy, simple bootstrappish look.
 Unit Tests: Contains unit tests for classes UserController.
 This is a demonstration of unit testing with Spring Boot and Spring Security. Uses Mockito+Hamcrest, of course.
 
-Spring Security: I opted to use a simple password-based approach, outlined here
+Spring Security: I opted to use a simple ("Basic") password-based approach, outlined here
 
 https://spring.io/guides/tutorials/spring-security-and-angular-js/
 
@@ -78,7 +78,7 @@ GET("/rest/post") =  Get all posts as a list of PostDto (open)
 POST("/rest/post", PostDto postDto) =  Create a new post (current user)
 GET("/rest/post/{id}") =  Get a post (PostDto) by id (open)
 DELETE("/rest/post/{id}") =  Delete a post (post owner or admin)
-PUT("/rest/post/{id}") =  Update a post (post owner)
+PUT("/rest/post/{id}", PostDto postDto) =  Update a post (post owner)
 
 Comments:
 
@@ -86,11 +86,16 @@ GET("/rest/post/{postId}/comment") =  Get all comments as a list of CommentDto (
 POST("/rest/post/{postId}/comment", CommentDto commentDto) =  Create a new comment (current user)
 GET("/rest/post/{postId}/comment/{id}") =  Get a comment (CommentDto) by id (open)
 DELETE("/rest/post/{postId}/comment/{id}") = Delete a comment (admin, post owner, comment owner)
-PUT("/rest/post/{postId}/comment/{id}") = Update a comment (comment owner)
+PUT("/rest/post/{postId}/comment/{id}", CommentDto commentDto) = Update a comment (comment owner)
 
 Categories:
 
 GET("/rest/category") =  Get all categories as a list of CategoryDto (open)
+POST("/rest/category", CategoryDto categoryDto) =  Create a new category (expert or admin)
+GET("/rest/category/{id}") =  Get one category (open)
+DELETE("/rest/category/{id}") =  Delete a category (admin)
+PUT("/rest/category/{id}", CategoryDto categoryDto) =  Update a category (admin)
+
 
 Sample DB:
 

@@ -21,7 +21,17 @@ app.service('auth', function ($rootScope, $http) {
                 // Set up global variables
                 $rootScope.isAuthenticated = true;
                 $rootScope.authUserName = response.data.name;
-                $rootScope.isAdmin = (response.data.authorities[0].authority === "ROLE_ADMIN");
+
+                // Check if the user is admin and/or expert
+                $rootScope.isAdmin = false;
+                $rootScope.isExpert = false;
+                response.data.authorities.forEach(function (x) {
+                    if (x.authority == "ROLE_ADMIN") {
+                        $rootScope.isAdmin = true;
+                    } else if (x.authority == "ROLE_EXPERT") {
+                        $rootScope.isExpert = true;
+                    }
+                });
 
                 // Try to get user ID from the server
                 $http.get('/userid').then(function (response) {
@@ -30,13 +40,17 @@ app.service('auth', function ($rootScope, $http) {
                     function () {
                         $rootScope.authUserId = undefined;
                     }
-                );
+                ).finally(function () {
+                    // Run function callback if not empty
+                    callback && callback();
+                });
             } else {
                 $rootScope.isAuthenticated = false;
+
+                // Run function callback if not empty
+                callback && callback();
             }
 
-            // Run function callback if not empty
-            callback && callback();
 
         }, function () {
             // get operation had an error

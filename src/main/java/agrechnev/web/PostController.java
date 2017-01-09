@@ -1,6 +1,7 @@
 package agrechnev.web;
 
 import agrechnev.dto.PostDto;
+import agrechnev.helpers.Util;
 import agrechnev.security.ExtraAuthService;
 import agrechnev.service.PostService;
 import org.slf4j.Logger;
@@ -65,6 +66,9 @@ public class PostController {
 
         // Set the timestamp
         postDto.setTimeStamp(LocalDateTime.now());
+
+        // Check the length for safety
+        postDto.setText(Util.checkLen(postDto.getText(), 2000));
 
         // Set the user id
         Long userId = extraAuthService.getId(principal);
@@ -154,8 +158,8 @@ public class PostController {
         // Check if admin or owner
         if (oldDto.getUserId().equals(extraAuthService.getId(principal))) {
 
-            // Update (text anc categories)
-            oldDto.setText(updator.getText());
+            // Update (text and categories)
+            oldDto.setText(Util.checkLen(updator.getText(), 2000));
             oldDto.setCategories(updator.getCategories());
 
             postService.update(oldDto);

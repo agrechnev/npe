@@ -1,6 +1,7 @@
 package agrechnev.web;
 
 import agrechnev.dto.CommentDto;
+import agrechnev.helpers.Util;
 import agrechnev.security.ExtraAuthService;
 import agrechnev.service.CommentService;
 import org.slf4j.Logger;
@@ -116,7 +117,7 @@ public class CommentController {
 
         commentDto.setUserId(userId);
 
-        String shortText = commentDto.getText().substring(0, Math.min(commentDto.getText().length(), 100));
+        String shortText = Util.checkLen(commentDto.getText(), 50);
 
         logger.info("Creating new comment:" + shortText);
         logger.info("by user : " + commentDto.getUserId());
@@ -129,6 +130,9 @@ public class CommentController {
 
         // Set post id
         commentDto.setPostId(postId);
+
+        // Check length
+        commentDto.setText(Util.checkLen(commentDto.getText(), 2000));
 
         // Create a new comment
         Long id = commentService.create(commentDto);
@@ -205,8 +209,8 @@ public class CommentController {
 
             // Admin, comment owner, or post owner == OK, may delete
 
-            // Change text only
-            commentDto.setText(updator.getText());
+            // Change text only (check length)
+            commentDto.setText(Util.checkLen(updator.getText(), 2000));
 
             commentService.update(commentDto);
 
