@@ -30,6 +30,15 @@ public abstract class AbstractService<D extends Dto, E extends EntityWithId> {
     // -------------- Non-abstract methods ------------------
 
     /**
+     * Return the element count
+     * @return
+     */
+    public long count() {
+        return entityRepo.count();
+    }
+
+
+    /**
      * Create a new Dto
      *
      * @param dto

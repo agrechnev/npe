@@ -41,7 +41,7 @@ This is a Rest Resource Server written on Java+Spring Boot+Hibernate.
 Front End: A simple single-page AngularJS front end (directory src/main/resources/static).
 Nothing fancy, simple bootstrappish look.
 
-Unit Tests: Contains unit tests for classes UserController.
+Unit Tests: Contains unit tests for classes UserController (very extensive) and UserService, as examples.
 This is a demonstration of unit testing with Spring Boot and Spring Security. Uses Mockito+Hamcrest, of course.
 
 Spring Security: I opted to use a simple ("Basic") password-based approach, outlined here
