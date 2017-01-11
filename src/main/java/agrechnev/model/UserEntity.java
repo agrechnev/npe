@@ -1,6 +1,8 @@
 package agrechnev.model;
 
 import agrechnev.helpers.Util;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -45,9 +47,11 @@ public class UserEntity implements EntityWithId {
 
     //-------------- Links -----------------------
     @ManyToMany
+    @Cascade({CascadeType.PERSIST, CascadeType.MERGE})
     private Set<CategoryEntity> myCategories = new HashSet<>();
 
-    @OneToMany
+    @OneToMany(orphanRemoval = true, mappedBy = "user")
+    @Cascade(CascadeType.ALL)
     private Set<PostEntity> myPosts = new HashSet<>();
 
     //--------------------------------------------

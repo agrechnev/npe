@@ -1,5 +1,7 @@
 package agrechnev.model;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
@@ -36,6 +38,7 @@ public class PostEntity implements EntityWithId {
     //-------------- Links -----------------
     // Categories of this post
     @ManyToMany
+    @Cascade({CascadeType.PERSIST, CascadeType.MERGE})
     private Set<CategoryEntity> categories = new HashSet<>();
 
     // Post owner+author
@@ -43,7 +46,8 @@ public class PostEntity implements EntityWithId {
     private UserEntity user;
 
     // Comments
-    @OneToMany
+    @OneToMany(orphanRemoval = true, mappedBy = "post")
+    @Cascade(CascadeType.ALL)
     private List<CommentEntity> comments = new ArrayList<>();
 
     //-------------- Constructors -----------
