@@ -2,7 +2,7 @@ NullPointerException (NPE) : a programming forum
 
 By Oleksiy Grechnyev, Dec 2016- Jan 2017
 
-development in progress
+Version 1.0
 
 A gradle project. Requires JDK 8 and an external database server (preferably MySQL or MariaDB). With default settings it runs an embedded Tomcat web server on localhost:8080
 
