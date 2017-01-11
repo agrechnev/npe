@@ -30,6 +30,8 @@ public class Application {
         return args -> {
             // If you want something to run at startup, put it here
 
+            logger.info("Starting NPE ...");
+
 //            logger.info("I am Brianna and I am a jedi !!!");
 
             // Create sampleDB if needed

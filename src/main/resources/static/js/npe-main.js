@@ -2,7 +2,7 @@
  * Created by Oleksiy Grechnyev on 12/12/2016.
  * Main code: router + navigation controller
  */
-var app = angular.module("npeApp", ["ngRoute"]);
+var app = angular.module("npeApp", ["ngRoute", "ngCookies"]);
 
 app.config(function ($routeProvider, $httpProvider) {
     // Set Up Routing
@@ -62,12 +62,12 @@ app.config(function ($routeProvider, $httpProvider) {
 });
 
 // Navigation controller.
-app.controller('navigation', function ($scope, $http, $location, $rootScope, $route, auth) {
+app.controller('navigation', function ($scope, $http, $location, $rootScope, $route, $cookies, auth) {
     var self = this;
 
     // Check if I am already authenticated
     // Run authenticate w/o credentials
-    auth.authenticate(null, null);
+    auth.authenticate();
 
     // Check the current location (to show the active entry in nav-pills menu)
     self.isActive = function (viewLocation) {
@@ -78,6 +78,15 @@ app.controller('navigation', function ($scope, $http, $location, $rootScope, $ro
         $http.post('/logout', {}).finally(function () {
             $rootScope.isAuthenticated = false;
             $rootScope.isAdmin = false;
+            $rootScope.isExpert = false;
+            $cookies.remove("JSESSIONID"); // Just in case
+
+            // This is very important to set XSRF-TOKEN cookie after logout
+            // Without this I wouldn't be able to Sign Up after Logout
+            // Don't know exactly why it is so
+            // Apparently you need at leas one get before post to get the token cookie
+            auth.authenticate();
+
             $location.path("/"); // Go to the main page
             $route.reload();
         });

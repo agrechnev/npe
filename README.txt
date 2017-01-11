@@ -22,13 +22,15 @@ Set up the database settings (at least login+password) in the file "application.
 gradlew build
 gradlew bootRun
 
+Alternatively, if you are using an IDE, e.g. IntelliJ Idea, just run src/main/java/agrechnev/Application.java
+
 Note that a fat JAR named npe-<version>.jar is created in the build/libs directory. It can be run with
 
 java -jar build/libs/npe-<version>.jar
 
 Note how Spring Boot plugin creates a fat jar with main class specified automatically. Cool!
 
-4. Open localhost:8080 in your browser. It is better to use a Private(Anonymous) browser window. Enjoy!
+4. Open localhost:8080 in your browser. It is better to use a Private (Anonymous) browser window. Enjoy!
 
 For a quick start, log in with admin:admin (it works with an empty database), then create a sample database (Sample DB).
 All users in the sample DB have their login names as passwords, e.g. admin:admin, brianna:brianna.
@@ -101,3 +103,14 @@ Sample DB:
 
 POST("/rest/sample/create", String passw) = Create sample database (Admin Only)
 POST("/rest/sample/delete", String passw) = Delete everything (Admin Only)
+
+----
+Things I didn't do due to limited time:
+
+This project is a demonstartion of technology. For a real site I would do many other things, such as:
+
+Search and paginaltion of posts
+Likes and user rating
+Marking question (post) as answered
+User home page with photo, CV etc.
+Category page with list of books/tutorials/sites

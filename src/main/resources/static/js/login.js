@@ -3,6 +3,8 @@
 app.controller('login', function ($scope, $http, $rootScope, $location, auth) {
     var self = this;
 
+    // self.cookies = $cookies.getAll();
+
     // No credentials before you actually log in
     self.credentials = {};
 
